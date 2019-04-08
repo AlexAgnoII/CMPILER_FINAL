@@ -147,6 +147,16 @@ public interface PASCALetGrammarListener extends ParseTreeListener {
 	 */
 	void exitIdentifierList(PASCALetGrammarParser.IdentifierListContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PASCALetGrammarParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(PASCALetGrammarParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PASCALetGrammarParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(PASCALetGrammarParser.TypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PASCALetGrammarParser#typeIdentifier}.
 	 * @param ctx the parse tree
 	 */
@@ -156,6 +166,16 @@ public interface PASCALetGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTypeIdentifier(PASCALetGrammarParser.TypeIdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PASCALetGrammarParser#arrayType}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayType(PASCALetGrammarParser.ArrayTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PASCALetGrammarParser#arrayType}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayType(PASCALetGrammarParser.ArrayTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PASCALetGrammarParser#subroutineDeclarationPart}.
 	 * @param ctx the parse tree

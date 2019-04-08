@@ -183,6 +183,18 @@ public class PASCALetGrammarBaseListener implements PASCALetGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterType(PASCALetGrammarParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitType(PASCALetGrammarParser.TypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTypeIdentifier(PASCALetGrammarParser.TypeIdentifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -190,6 +202,18 @@ public class PASCALetGrammarBaseListener implements PASCALetGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTypeIdentifier(PASCALetGrammarParser.TypeIdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayType(PASCALetGrammarParser.ArrayTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayType(PASCALetGrammarParser.ArrayTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

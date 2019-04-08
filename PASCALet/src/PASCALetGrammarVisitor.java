@@ -94,11 +94,23 @@ public interface PASCALetGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdentifierList(PASCALetGrammarParser.IdentifierListContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PASCALetGrammarParser#type}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitType(PASCALetGrammarParser.TypeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PASCALetGrammarParser#typeIdentifier}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitTypeIdentifier(PASCALetGrammarParser.TypeIdentifierContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PASCALetGrammarParser#arrayType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayType(PASCALetGrammarParser.ArrayTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PASCALetGrammarParser#subroutineDeclarationPart}.
 	 * @param ctx the parse tree

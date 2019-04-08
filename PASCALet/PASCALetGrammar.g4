@@ -50,15 +50,23 @@ variableDeclarationPart
    ;
 
 variableDeclaration
-   : identifierList COLON typeIdentifier
+   : identifierList COLON type
    ;
 
 identifierList
    : identifier (COMMA identifier)*
    ;
 
+type
+   : typeIdentifier | arrayType
+   ;
+
 typeIdentifier
    : CHAR | BOOLEAN | INTEGER | STRING
+   ;
+
+arrayType
+   : ARRAY LBRACKET expression PERIODPERIOD expression RBRACKET OF typeIdentifier
    ;
 
 subroutineDeclarationPart
@@ -78,11 +86,11 @@ functionDeclaration
    ;
 
 formalParameterlist
-   : LPAREN parameterGroup (SEMICOLUMN parameterGroup) RPAREN
+   : LPAREN parameterGroup (SEMICOLUMN parameterGroup)* RPAREN
    ;
 
 parameterGroup
-   : identifierList COLON typeIdentifier
+   : (identifierList COLON typeIdentifier)?
    ;
 
 resultType
@@ -142,7 +150,7 @@ finalValue
    ;
 
 assignmentStatement
-   : variable ASSIGNMENT (expression | readStatement)
+   : variable ASSIGNMENT expression
    ;
 
 variable
@@ -194,7 +202,7 @@ parameterList
    ;
 
 actualParameter
-   : expression | //or epsion meaning non.
+   : (expression)? //or epsion meaning non.
    ;
 
 procedureStatement
@@ -296,6 +304,10 @@ BOOLEAN
 
 ARRAY
    : A R R A Y
+   ;
+
+OF
+   : O F
    ;
 
 CONST
@@ -418,6 +430,10 @@ STRING_LITERAL
 
 PERIOD
    : '.'
+   ;
+
+PERIODPERIOD
+   : '..'
    ;
 
 COMMENT1

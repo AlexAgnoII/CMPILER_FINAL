@@ -1,0 +1,6 @@
+program alex;
+
+
+begin
+   writeln('Hello!')
+end.
