@@ -2,6 +2,8 @@ import org.antlr.v4.runtime.tree.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> {
@@ -125,6 +127,12 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitFormalParameterlist (PASCALetGrammarParser.FormalParameterlistContext ctx) {
+        /*List<PASCALetObject> list = new ArrayList<>();
+        if (ctx.parameterGroup() != null) {
+            for(PASCALetGrammarParser.ParameterGroupContext pg: ctx.parameterGroup(0). {
+
+            }
+        } */
         return super.visitFormalParameterlist(ctx);
     }
 
@@ -178,17 +186,108 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         return super.visitStructuredStatement(ctx);
     }
 
+    @Override
+    public PASCALetObject visitIfStatement (PASCALetGrammarParser.IfStatementContext ctx) {
+        return super.visitIfStatement(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitForStatement (PASCALetGrammarParser.ForStatementContext ctx) {
+        return super.visitForStatement(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitForList (PASCALetGrammarParser.ForListContext ctx) {
+        return super.visitForList(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitInitialValue (PASCALetGrammarParser.InitialValueContext ctx) {
+        return super.visitInitialValue(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitFinalValue (PASCALetGrammarParser.FinalValueContext ctx) {
+        return super.visitFinalValue(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitAssignmentStatement (PASCALetGrammarParser.AssignmentStatementContext ctx) {
+        return super.visitAssignmentStatement(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitVariable (PASCALetGrammarParser.VariableContext ctx) {
+        return super.visitVariable(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitExpression (PASCALetGrammarParser.ExpressionContext ctx) {
+        return super.visitExpression(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitSimpleExpression (PASCALetGrammarParser.SimpleExpressionContext ctx) {
+        return super.visitSimpleExpression(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitTerm (PASCALetGrammarParser.TermContext ctx) {
+        return super.visitTerm(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitAdditiveOperator (PASCALetGrammarParser.AdditiveOperatorContext ctx) {
+        return super.visitAdditiveOperator(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitMultiplicativeOperator (PASCALetGrammarParser.MultiplicativeOperatorContext ctx) {
+        return super.visitMultiplicativeOperator(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitRelationaloperator (PASCALetGrammarParser.RelationaloperatorContext ctx) {
+        return super.visitRelationaloperator(ctx);
+    }
 
+    @Override
+    public PASCALetObject visitSignedFactor (PASCALetGrammarParser.SignedFactorContext ctx) {
+        return super.visitSignedFactor(ctx);
+    }
+
+    @Override
+    public PASCALetObject visitFactor (PASCALetGrammarParser.FactorContext ctx) {
+        return super.visitFactor(ctx);
+    }
+
+    @Override
+    public  PASCALetObject visitUnsignedConstant (PASCALetGrammarParser.UnsignedConstantContext ctx) {
+        return super.visitUnsignedConstant(ctx);
+    }
+
+    @Override
+    public PASCALetObject visitFunctionDesignator (PASCALetGrammarParser.FunctionDesignatorContext ctx) {
+        return super.visitFunctionDesignator(ctx);
+    }
+
+    @Override
+    public PASCALetObject visitParameterList (PASCALetGrammarParser.ParameterListContext ctx) {
+        return super.visitParameterList(ctx);
+    }
+
+    @Override
+    public PASCALetObject visitActualParameter (PASCALetGrammarParser.ActualParameterContext ctx) {
+        return super.visitActualParameter(ctx);
+    }
+
+    @Override
+    public PASCALetObject visitProcedureStatement (PASCALetGrammarParser.ProcedureStatementContext ctx) {
+        return super.visitProcedureStatement(ctx);
+    }
+
+    @Override
+    public PASCALetObject visitEmptyStatement (PASCALetGrammarParser.EmptyStatementContext ctx) {
+        return PASCALetObject.VOID;
+    }
 }

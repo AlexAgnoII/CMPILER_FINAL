@@ -12,7 +12,6 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
         this.procedures = procedures;
     }
 
-
     @Override
     public PASCALetObject visitProcedureDeclaration (PASCALetGrammarParser.ProcedureDeclarationContext ctx) {
         List<PASCALetGrammarParser.ParameterGroupContext> procParams = null;

@@ -32,7 +32,7 @@ public class PASCALet {
         procedure.get("whatever5").invoke(null, null, null, null);
 
         //test
-        //ShowAllSubroutines(functions, procedure);
+        ShowAllSubroutines(functions, procedure);
 
         //Evaluation visitor here:
 
