@@ -4,9 +4,11 @@ import java.util.*;
 
 public class PASCALetFunctionVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> {
 
-    // Function Map here
+    private Map<String, PASCALetFunction> functions;
 
-    // PASCALetFunctionVisitor constructor
+    PASCALetFunctionVisitor (Map<String, PASCALetFunction> functions) {
+        this.functions = functions;
+    }
 
    @Override
     public PASCALetObject visitFunctionDeclaration (PASCALetGrammarParser.FunctionDeclarationContext ctx) {
@@ -15,6 +17,7 @@ public class PASCALetFunctionVisitor extends PASCALetGrammarBaseVisitor<PASCALet
        try {
            funcParams = ctx.formalParameterlist().parameterGroup();
            // formalParameterListContext > parameterGroupContext
+
        } catch (Exception e) {}
 
        if (funcParams == null) {
@@ -24,7 +27,7 @@ public class PASCALetFunctionVisitor extends PASCALetGrammarBaseVisitor<PASCALet
        String functionName = ctx.identifier().getText() + funcParams.size();
        ParseTree block = ctx.block();
 
-       // function.put..
+       functions.put(functionName, new PASCALetFunction(funcParams, block));
 
        return PASCALetObject.VOID;
    }

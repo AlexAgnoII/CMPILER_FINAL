@@ -10,6 +10,11 @@ public class PASCALetFunction {
     private ParseTree block;
     private String returnType;
 
+    public PASCALetFunction (List<PASCALetGrammarParser.ParameterGroupContext> params, ParseTree block) {
+        this.params = params;
+        this.block = block;
+    }
+
 
     public PASCALetObject invoke(List<PASCALetGrammarParser.ParameterListContext> params,
                                  Map<String, PASCALetFunction> functions,
@@ -21,7 +26,6 @@ public class PASCALetFunction {
 
         //function scope, scope inside as the parent is the global scope (program scope)
         PASCALetScope nextScope = new PASCALetScope(null);
-
 
 
         return null;
