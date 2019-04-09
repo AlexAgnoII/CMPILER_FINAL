@@ -18,10 +18,8 @@ public class PASCALet {
         ParseTree tree = parser.program();
 
 
-
-
-
-
+        PascalTest test = new PascalTest();
+        test.visit (tree);
 
 
 

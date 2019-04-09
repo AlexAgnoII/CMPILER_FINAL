@@ -90,7 +90,11 @@ formalParameterlist
    ;
 
 parameterGroup
-   : (identifierList COLON typeIdentifier)?
+   : (identifierList COLON typeIdentifier) | emptyParameter
+   ;
+
+emptyParameter
+   :
    ;
 
 resultType
@@ -202,7 +206,7 @@ parameterList
    ;
 
 actualParameter
-   : (expression)? //or epsion meaning non.
+   : expression | emptyParameter
    ;
 
 procedureStatement

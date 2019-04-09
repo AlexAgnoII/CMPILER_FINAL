@@ -2,25 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cbe32a5a-4b38-43fa-913d-ab6b26c534b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PASCALet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PASCALetException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PASCALetObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PASCALetScope.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PASCALetFunctionVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/PASCALetProcedureVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PASCALet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PASCALet.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PASCALetGrammar.g4" beforeDir="false" afterPath="$PROJECT_DIR$/PASCALetGrammar.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammar.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammar.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammar.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammar.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammarBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammarBaseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammarBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammarBaseVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammarLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammarLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammarLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammarLexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammarLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammarLexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammarListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammarListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammarParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammarParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetGrammarVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetGrammarVisitor.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,67 +19,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/PASCALetFunction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PASCALetGrammar.g4">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="426" column="14" lean-forward="true" selection-start-line="426" selection-start-column="14" selection-end-line="426" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PASCALet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PASCALetScope.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#243#244#0" expanded="true" />
-                <element signature="e#269#270#0" expanded="true" />
-                <element signature="e#416#417#0" expanded="true" />
-                <element signature="e#471#472#0" expanded="true" />
-                <element signature="e#2824#2825#0" expanded="true" />
-                <element signature="e#2893#2894#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PASCALetObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-              <folding>
-                <element signature="e#761#762#0" expanded="true" />
-                <element signature="e#791#792#0" expanded="true" />
-                <element signature="e#881#882#0" expanded="true" />
-                <element signature="e#1179#1180#0" expanded="true" />
-                <element signature="e#1255#1256#0" expanded="true" />
-                <element signature="e#1327#1328#0" expanded="true" />
-                <element signature="e#1408#1409#0" expanded="true" />
-                <element signature="e#1489#1490#0" expanded="true" />
-                <element signature="e#1569#1570#0" expanded="true" />
-                <element signature="e#1649#1650#0" expanded="true" />
-                <element signature="e#1571#1572#0" expanded="true" />
-                <element signature="e#1602#1603#0" expanded="true" />
-                <element signature="e#1637#1638#0" expanded="true" />
-                <element signature="e#1672#1673#0" expanded="true" />
-                <element signature="e#1866#1867#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="255">
+              <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -114,7 +55,6 @@
       <find>COMMA</find>
       <find>type</find>
       <find>TYPE</find>
-      <find>parameterGroup</find>
       <find>boolean</find>
       <find>bool</find>
       <find>simple</find>
@@ -122,11 +62,14 @@
       <find>READ</find>
       <find>readln</find>
       <find>constantDefinition</find>
-      <find>type</find>
       <find>identifierList</find>
-      <find>identifier</find>
       <find>signedFactor</find>
       <find>OF</find>
+      <find>function</find>
+      <find>identifier</find>
+      <find>functionDeclaration</find>
+      <find>ProcedureStatement</find>
+      <find>parameterGroup</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -137,10 +80,15 @@
       <list>
         <option value="$PROJECT_DIR$/src/Pascalet/PASCALet.java" />
         <option value="$PROJECT_DIR$/src/PASCALetException.java" />
-        <option value="$PROJECT_DIR$/src/PASCALet.java" />
         <option value="$PROJECT_DIR$/src/PASCALetObject.java" />
         <option value="$PROJECT_DIR$/src/PASCALetScope.java" />
+        <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/src/PascalTest.java" />
+        <option value="$PROJECT_DIR$/src/PASCALetGrammarBaseVisitor.java" />
+        <option value="$PROJECT_DIR$/src/PASCALet.java" />
         <option value="$PROJECT_DIR$/PASCALetGrammar.g4" />
+        <option value="$PROJECT_DIR$/src/PASCALetProcedure.java" />
+        <option value="$PROJECT_DIR$/src/PASCALetFunction.java" />
       </list>
     </option>
   </component>
@@ -162,8 +110,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -174,12 +120,19 @@
             <path>
               <item name="PASCALet" type="b2602c69:ProjectViewProjectNode" />
               <item name="PASCALet" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PASCALet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PASCALet" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -192,7 +145,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -249,28 +202,27 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12526652" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12739871" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.19609967" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32719395" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Tool Output" order="8" sideWeight="0.51044774" visible="true" weight="0.32936078" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3298731" />
+      <window_info anchor="bottom" id="Tool Output" order="8" sideWeight="0.51044774" weight="0.32936078" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.48955223" side_tool="true" weight="0.3298731" />
-      <window_info anchor="bottom" id="ANTLR Preview" order="11" weight="0.52979416" />
+      <window_info anchor="bottom" id="ANTLR Preview" order="11" weight="0.40195015" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -303,17 +255,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PASCALetScope.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="25" selection-start-column="25" selection-end-column="25" />
+          <folding>
+            <element signature="e#243#244#0" expanded="true" />
+            <element signature="e#269#270#0" expanded="true" />
+            <element signature="e#2787#2788#0" expanded="true" />
+            <element signature="e#2824#2825#0" expanded="true" />
+            <element signature="e#2864#2865#0" expanded="true" />
+            <element signature="e#2893#2894#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/PASCALetGrammarBaseVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2252">
+          <caret line="359" column="49" lean-forward="true" selection-start-line="359" selection-start-column="49" selection-end-line="359" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PASCALetFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PASCALetProcedure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="70" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PascalTest.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="11" lean-forward="true" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+          <caret line="15" column="83" lean-forward="true" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="83" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PASCALet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="340">
+          <caret line="20" column="43" lean-forward="true" selection-start-line="20" selection-start-column="43" selection-end-line="20" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -322,48 +323,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PASCALetObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="476">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
           <folding>
-            <element signature="e#761#762#0" expanded="true" />
-            <element signature="e#791#792#0" expanded="true" />
+            <element signature="e#843#844#0" expanded="true" />
             <element signature="e#881#882#0" expanded="true" />
+            <element signature="e#1144#1145#0" expanded="true" />
             <element signature="e#1179#1180#0" expanded="true" />
+            <element signature="e#1211#1212#0" expanded="true" />
             <element signature="e#1255#1256#0" expanded="true" />
+            <element signature="e#1288#1289#0" expanded="true" />
             <element signature="e#1327#1328#0" expanded="true" />
+            <element signature="e#1361#1362#0" expanded="true" />
             <element signature="e#1408#1409#0" expanded="true" />
+            <element signature="e#1442#1443#0" expanded="true" />
             <element signature="e#1489#1490#0" expanded="true" />
+            <element signature="e#1520#1521#0" expanded="true" />
             <element signature="e#1569#1570#0" expanded="true" />
-            <element signature="e#1649#1650#0" expanded="true" />
-            <element signature="e#1571#1572#0" expanded="true" />
             <element signature="e#1602#1603#0" expanded="true" />
-            <element signature="e#1637#1638#0" expanded="true" />
-            <element signature="e#1672#1673#0" expanded="true" />
+            <element signature="e#1649#1650#0" expanded="true" />
+            <element signature="e#1842#1843#0" expanded="true" />
             <element signature="e#1866#1867#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PASCALetScope.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#243#244#0" expanded="true" />
-            <element signature="e#269#270#0" expanded="true" />
-            <element signature="e#416#417#0" expanded="true" />
-            <element signature="e#471#472#0" expanded="true" />
-            <element signature="e#2824#2825#0" expanded="true" />
-            <element signature="e#2893#2894#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PASCALetGrammar.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="426" column="14" lean-forward="true" selection-start-line="426" selection-start-column="14" selection-end-line="426" selection-end-column="14" />
+        <state relative-caret-position="3128">
+          <caret line="184" column="60" lean-forward="true" selection-end-line="582" selection-end-column="4" />
         </state>
       </provider>
     </entry>
