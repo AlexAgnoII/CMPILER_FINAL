@@ -1,10 +1,24 @@
 program alex;
 
-function someFunction(x, y, z : integer) : integer;
+procedure something;
 begin
-   someFunction:=5;
+end;
+
+procedure lol;
+begin
+end;
+
+function xd(): integer;
+begin
+end;
+
+procedure wow(x:integer);
+begin
+end;
+
+function nice(x,y,z:integer) : string;
+begin
 end;
 
 begin
-   writeln('Hello!')
 end.

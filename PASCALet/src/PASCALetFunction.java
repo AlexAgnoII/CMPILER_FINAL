@@ -10,9 +10,10 @@ public class PASCALetFunction {
     private ParseTree block;
     private String returnType;
 
-    public PASCALetFunction (List<PASCALetGrammarParser.ParameterGroupContext> params, ParseTree block) {
+    public PASCALetFunction (List<PASCALetGrammarParser.ParameterGroupContext> params, ParseTree block, String returnType) {
         this.params = params;
         this.block = block;
+        this.returnType = returnType;
     }
 
 

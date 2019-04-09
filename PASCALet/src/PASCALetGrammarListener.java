@@ -237,16 +237,6 @@ public interface PASCALetGrammarListener extends ParseTreeListener {
 	 */
 	void exitParameterGroup(PASCALetGrammarParser.ParameterGroupContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PASCALetGrammarParser#emptyParameter}.
-	 * @param ctx the parse tree
-	 */
-	void enterEmptyParameter(PASCALetGrammarParser.EmptyParameterContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PASCALetGrammarParser#emptyParameter}.
-	 * @param ctx the parse tree
-	 */
-	void exitEmptyParameter(PASCALetGrammarParser.EmptyParameterContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link PASCALetGrammarParser#resultType}.
 	 * @param ctx the parse tree
 	 */

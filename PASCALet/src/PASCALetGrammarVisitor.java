@@ -148,12 +148,6 @@ public interface PASCALetGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParameterGroup(PASCALetGrammarParser.ParameterGroupContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PASCALetGrammarParser#emptyParameter}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEmptyParameter(PASCALetGrammarParser.EmptyParameterContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link PASCALetGrammarParser#resultType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

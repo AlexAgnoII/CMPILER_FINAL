@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> {
 
-    private Map<String, PASCALetFunction> functions;
+    private Map<String, PASCALetProcedure> procedures;
 
-    PASCALetProcedureVisitor (Map<String, PASCALetFunction> functions) {
-        this.functions = functions;
+    PASCALetProcedureVisitor (Map<String, PASCALetProcedure> procedures) {
+        this.procedures = procedures;
     }
 
 
@@ -22,18 +22,29 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
 
         } catch (Exception e)  {}
 
+        //if null, it means its a procedure with no parenthesis: procedure something;
         if (procParams == null) {
-            procParams = new ArrayList<>();
+            procParams = new ArrayList<PASCALetGrammarParser.ParameterGroupContext>();
+        }
+        //if size 0, it means its a procedure with empty parameters: procedure doSomething();
+        else if(procParams.size() == 0){
+            procParams = new ArrayList<PASCALetGrammarParser.ParameterGroupContext>(); //not needed pero just in case.
         }
 
         String procedureName = ctx.identifier().getText() + procParams.size();
         ParseTree block = ctx.block();
 
-        functions.put(procedureName, new PASCALetFunction(procParams, block));
+        //testing purposes
+       /*
+       System.out.println("Procedure name: " + procedureName);
+       for(int i = 0; i < procParams.size(); i++) {
+           System.out.print(procParams.get(i).identifierList().getText());
+           System.out.println(" Type: " + procParams.get(i).typeIdentifier().getText());
+       }*/
+
+        procedures.put(procedureName, new PASCALetProcedure(procParams, block));
 
         return PASCALetObject.VOID;
-
-
     }
 
 }

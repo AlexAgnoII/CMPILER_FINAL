@@ -86,15 +86,11 @@ functionDeclaration
    ;
 
 formalParameterlist
-   : LPAREN parameterGroup (SEMICOLUMN parameterGroup)* RPAREN
+   : LPAREN (parameterGroup (SEMICOLUMN parameterGroup)*)? RPAREN
    ;
 
 parameterGroup
-   : (identifierList COLON typeIdentifier) | emptyParameter
-   ;
-
-emptyParameter
-   :
+   : (identifierList COLON typeIdentifier)
    ;
 
 resultType
@@ -198,7 +194,7 @@ unsignedConstant
    ;
 
 functionDesignator //function when called for an assignment.
-   : identifier LPAREN parameterList RPAREN
+   : identifier LPAREN (parameterList)? RPAREN
    ;
 
 parameterList
@@ -206,11 +202,11 @@ parameterList
    ;
 
 actualParameter
-   : expression | emptyParameter
+   : expression
    ;
 
 procedureStatement
-   : identifier (LPAREN parameterList RPAREN)?
+   : identifier (LPAREN (parameterList)? RPAREN)?
    ;
 
 emptyStatement

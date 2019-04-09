@@ -111,4 +111,20 @@ public class PASCALetScope {
         return parent;
     }
 
+    public String VariablesToString() {
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<String, PASCALetObject> var: variables.entrySet()) {
+            sb.append(var.getKey()).append("->").append(var.getValue()).append(",");
+        }
+        return sb.toString();
+    }
+
+    public String ConstantToString() {
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<String, PASCALetObject> con: constants.entrySet()) {
+            sb.append(con.getKey()).append("->").append(con.getValue()).append(",");
+        }
+        return sb.toString();
+    }
+
 }
