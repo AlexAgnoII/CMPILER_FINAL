@@ -18,13 +18,20 @@ public class PASCALetScope {
     }
 
     //inserts a ariable name key and a value in the variables hashmap.
-    public void assignParam(String variableName, PASCALetObject value) {
+    public void assignVariable(String variableName, PASCALetObject value) {
         this.variables.put(variableName, value);
     }
 
     //inserts a constant name key and a value to the constants hashmap. CANNOT BE REASSIGNED.
     public void assignConstant(String constantName, PASCALetObject value) {
-        this.constants.put(constantName, value);
+
+        if (resolve (constantName) != null) {
+            throw new RuntimeException ("Variable " + constantName + "  already in use. Cannot be a constant.");
+        }
+
+        if (resolveConstant (constantName) == null) {
+            this.constants.put (constantName, value);
+        }
 
     }
 
@@ -37,13 +44,13 @@ public class PASCALetScope {
         }
 
         //if it exissts, just reasssign it.
-        if(this.resolve(variableName)!=null) {
+        if(this.resolve(variableName)!= null) {
             this.reAssign(variableName, value);
         }
 
         //if it doesn't exist, create a new entry on the hashmap.
         else {
-            this.assignParam(variableName, value);
+            this.assignVariable(variableName, value);
         }
 
     }
@@ -52,7 +59,7 @@ public class PASCALetScope {
     public void reAssign(String variableName, PASCALetObject value) {
 
         if(this.variables.containsKey(variableName)) { //variable is in this scope.
-            variables.put(variableName, value);
+            this.assignVariable(variableName, value);
         }
 
         else { //not in this scope, so check the parent scope
