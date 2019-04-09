@@ -291,6 +291,18 @@ public class PASCALetGrammarBaseListener implements PASCALetGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEmptyParameter(PASCALetGrammarParser.EmptyParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEmptyParameter(PASCALetGrammarParser.EmptyParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterResultType(PASCALetGrammarParser.ResultTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
