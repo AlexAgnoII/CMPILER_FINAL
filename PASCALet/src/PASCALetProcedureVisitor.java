@@ -2,11 +2,16 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> {
-    // Function Map here
 
-    // PASCALetFunctionVisitor constructor
+    private Map<String, PASCALetFunction> functions;
+
+    PASCALetProcedureVisitor (Map<String, PASCALetFunction> functions) {
+        this.functions = functions;
+    }
+
 
     @Override
     public PASCALetObject visitProcedureDeclaration (PASCALetGrammarParser.ProcedureDeclarationContext ctx) {
@@ -24,7 +29,7 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
         String procedureName = ctx.identifier().getText() + procParams.size();
         ParseTree block = ctx.block();
 
-        // function.put..
+        functions.put(procedureName, new PASCALetFunction(procParams, block));
 
         return PASCALetObject.VOID;
 
