@@ -8,12 +8,14 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     private BufferedReader bufferedReader;
     private PASCALetScope scope;
     private Map<String, PASCALetFunction> functions;
+    private Map<String, PASCALetProcedure> procedures;
 
 
-    public PASCALetVisitor (PASCALetScope scope, Map<String, PASCALetFunction> functions) {
+    public PASCALetVisitor (PASCALetScope scope, Map<String, PASCALetFunction> functions, Map<String, PASCALetProcedure> procedures) {
         bufferedReader = new BufferedReader( (new InputStreamReader((System.in))));
         this.scope = scope;
         this.functions = functions;
+        this.procedures = procedures;
     }
 
     @Override //
@@ -129,11 +131,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     @Override
     public PASCALetObject visitParameterGroup (PASCALetGrammarParser.ParameterGroupContext ctx) {
         return super.visitParameterGroup(ctx);
-    }
-
-    @Override
-    public PASCALetObject visitEmptyParameter (PASCALetGrammarParser.EmptyParameterContext ctx) {
-        return PASCALetObject.VOID;
     }
 
     @Override

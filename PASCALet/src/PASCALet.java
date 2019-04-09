@@ -28,6 +28,9 @@ public class PASCALet {
         PASCALetProcedureVisitor procedureVisitor = new PASCALetProcedureVisitor(procedure);
         procedureVisitor.visit(tree);
 
+        functions.get("something5").invoke(null, null, null, null);
+        procedure.get("whatever5").invoke(null, null, null, null);
+
         //test
         //ShowAllSubroutines(functions, procedure);
 

@@ -16,6 +16,7 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
     @Override
     public PASCALetObject visitProcedureDeclaration (PASCALetGrammarParser.ProcedureDeclarationContext ctx) {
         List<PASCALetGrammarParser.ParameterGroupContext> procParams = null;
+        int paramCount = 0;
 
         try {
             procParams = ctx.formalParameterlist().parameterGroup();
@@ -30,8 +31,11 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
         else if(procParams.size() == 0){
             procParams = new ArrayList<PASCALetGrammarParser.ParameterGroupContext>(); //not needed pero just in case.
         }
+        else if(procParams.size() >= 1) {
+            paramCount = this.countParameters(procParams);
+        }
 
-        String procedureName = ctx.identifier().getText() + procParams.size();
+        String procedureName = ctx.identifier().getText() + paramCount;
         ParseTree block = ctx.block();
 
         //testing purposes
@@ -41,10 +45,28 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
            System.out.print(procParams.get(i).identifierList().getText());
            System.out.println(" Type: " + procParams.get(i).typeIdentifier().getText());
        }*/
+        //System.out.println("Procedure Parameter size: " + paramCount);
 
-        procedures.put(procedureName, new PASCALetProcedure(procParams, block));
+        procedures.put(procedureName, new PASCALetProcedure(procParams, paramCount, block));
 
         return PASCALetObject.VOID;
+    }
+
+    //counts parameter of procedure
+    private int countParameters(List<PASCALetGrammarParser.ParameterGroupContext> param) {
+        int paramCount = 0;
+
+        //outer layer, groups of integer on type t.
+        for(int x = 0; x < param.size(); x++) {
+
+            List<PASCALetGrammarParser.IdentifierContext> identifiers = param.get(x).identifierList().identifier();
+            //inner layer, individual parameters of the function declaration.
+            for(int y = 0; y < identifiers.size(); y++) {
+                paramCount++;
+            }
+        }
+
+        return paramCount;
     }
 
 }

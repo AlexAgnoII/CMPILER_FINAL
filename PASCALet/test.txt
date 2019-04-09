@@ -1,22 +1,10 @@
 program alex;
 
-procedure something;
+function something(a : integer ; d : string ; x,y,z : integer) : integer ;
 begin
 end;
 
-procedure lol;
-begin
-end;
-
-function xd(): integer;
-begin
-end;
-
-procedure wow(x:integer);
-begin
-end;
-
-function nice(x,y,z:integer) : string;
+procedure whatever(a : integer; d : string ; x,y,z : integer);
 begin
 end;
 
