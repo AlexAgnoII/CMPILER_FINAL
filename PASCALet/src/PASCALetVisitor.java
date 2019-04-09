@@ -2,6 +2,8 @@ import org.antlr.v4.runtime.tree.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> {
@@ -123,6 +125,12 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitFormalParameterlist (PASCALetGrammarParser.FormalParameterlistContext ctx) {
+        /*List<PASCALetObject> list = new ArrayList<>();
+        if (ctx.parameterGroup() != null) {
+            for(PASCALetGrammarParser.ParameterGroupContext pg: ctx.parameterGroup(0). {
+
+            }
+        } */
         return super.visitFormalParameterlist(ctx);
     }
 

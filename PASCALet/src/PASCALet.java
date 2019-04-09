@@ -29,7 +29,7 @@ public class PASCALet {
         procedureVisitor.visit(tree);
 
         //test
-        //ShowAllSubroutines(functions, procedure);
+        ShowAllSubroutines(functions, procedure);
 
         //Evaluation visitor here:
 
