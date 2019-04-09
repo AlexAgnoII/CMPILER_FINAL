@@ -9,6 +9,7 @@ public class PASCALetFunction {
     private List<PASCALetGrammarParser.ParameterGroupContext> params;
     private ParseTree block;
     private String returnType;
+    private int test;
 
     public PASCALetFunction (List<PASCALetGrammarParser.ParameterGroupContext> params, ParseTree block) {
         this.params = params;
