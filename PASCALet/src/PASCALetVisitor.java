@@ -38,18 +38,48 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     }
 
     @Override //
-    public PASCALetObject visitConstantDefinitionPart (PASCALetGrammarParser.ConstantDefinitionPartContext ctx) {
-        return super.visitConstantDefinitionPart(ctx);
-    }
-
-    @Override //
     public PASCALetObject visitConstantDefinition (PASCALetGrammarParser.ConstantDefinitionContext ctx) {
-        return super.visitConstantDefinition(ctx);
+
+        String constantName = ctx.identifier().getText();
+        PASCALetObject pObject = this.visit(ctx.constant());
+        System.out.println(constantName);
+        pObject.setConstant(true);
+        scope.addConstant(constantName, pObject);
+
+        return PASCALetObject.VOID;
     }
 
     @Override
     public PASCALetObject visitConstant (PASCALetGrammarParser.ConstantContext ctx) {
-        return super.visitConstant(ctx);
+        PASCALetObject pObject = null;
+
+        //Has a sign. MUST BE A NUMBER ONLY.
+        if(ctx.unsignedInteger() != null) {
+            int number = Integer.parseInt(ctx.unsignedInteger().getText());
+
+                if(ctx.sign() != null) {
+                    if(ctx.sign().getText().equalsIgnoreCase("-"))
+                        number = -number;
+                }
+
+            pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_INT, number);
+        }
+
+        else if(ctx.string() != null) {
+            String value = ctx.string().getText();
+
+            //char
+            if(value.length() == 1) {
+                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_CHAR, value);
+            }
+            //string
+            else {
+                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_STRING, value);
+            }
+
+        }
+
+        return pObject;
     }
 
     @Override

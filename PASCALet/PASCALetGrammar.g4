@@ -26,7 +26,7 @@ constantDefinition
    ;
 
 constant
-   : unsignedInteger | sign unsignedInteger | identifier | sign identifier | string
+   : unsignedInteger | sign unsignedInteger | string
    ;
 
 unsignedInteger

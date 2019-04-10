@@ -1,9 +1,10 @@
 program alex;
 
-Var dec : integer; x,y,z : InTeGer;
+Var dec : integer; w,a,z : InTeGer;
 Var s : string;
-Const x = 1;
-Const y = 2;
+Const x = -1;
+Const y = +3;
+const a = 'a';
 
 
 begin

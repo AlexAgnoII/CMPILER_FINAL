@@ -28,14 +28,14 @@ public class PASCALetScope {
 
 
         //Variable never used, therefore insert it in our variable name.
-        if(!variables.containsKey(variableName)) {
+        if(!variables.containsKey(variableName) && !constants.containsKey(variableName)) {
              Object pascaletType = ConvertStringToObjectType.start(type);
              PASCALetObject value = new PASCALetObject(pascaletType);
              this.assignVariable(variableName, value);
         }
 
         else { //exists already, throw an error!
-             throw new RuntimeException("Variable identifier \"" + variableName + "\" already in use. Cannot be a variable identifier");
+             throw new RuntimeException("Identifier \"" + variableName + "\" already in use. Cannot be a variable identifier");
         }
     }
 
@@ -43,14 +43,14 @@ public class PASCALetScope {
     public void addConstant(String constantName, PASCALetObject value) {
         constantName = constantName.toLowerCase();
 
-        //if constant name exists, dont proceed.
-        if (!constants.containsKey(constantName)) {
-            throw new RuntimeException ("Constant identifier \"" + constantName + "\"  already in use. Cannot be a constant identifier.");
+        //if constant doesnt exist, create new constant.
+        if (!constants.containsKey(constantName) && !variables.containsKey(constantName)) {
+            this.constants.put (constantName, value);
         }
 
-        //if it doesnt, place new constant.
+        //if it exists, throw an error.
         else {
-            this.constants.put (constantName, value);
+            throw new RuntimeException ("Identifier \"" + constantName + "\"  already in use. Cannot be a constant identifier.");
         }
 
     }
@@ -66,7 +66,16 @@ public class PASCALetScope {
 
         //its in this scope, give value to that variable.
         if(this.variables.containsKey(variableName)) {
-            this.assignVariable(variableName, value);
+
+            PASCALetObject oldValue = this.variables.get(variableName);
+
+            if(oldValue.areSimilar(value)) {
+                this.variables.replace(variableName, value);
+            }
+
+            else {
+                throw new RuntimeException("Variable assignment error, data type mismatch.");
+            }
         }
 
         //Doesn't exist on this scope, so maybe its on the parent.

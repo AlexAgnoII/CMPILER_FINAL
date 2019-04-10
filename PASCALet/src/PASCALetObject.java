@@ -27,11 +27,10 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
         this.checkIfTypeIsInSpecification();
     }
 
-    //for constants
-    public PASCALetObject(Object type, Object value, boolean isConstFlag) {
+    public PASCALetObject(Object type, Object value) {
         this.type = type;
         this.value = value;
-        this.constant = isConstFlag;
+        this.constant = false;
 
         this.checkIfTypeIsInSpecification();
     }
@@ -127,5 +126,29 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
     @Override
     public int compareTo(PASCALetObject o) {
         return 0;
+    }
+
+    public boolean areSimilar(PASCALetObject other) {
+
+        if(this.isTypeInteger())
+            return other.isTypeInteger();
+
+        else if(this.isTypeBoolean()) {
+            return other.isTypeBoolean();
+        }
+
+        else if(this.isTypeChar()) {
+            return other.isTypeChar();
+        }
+
+        else if (this.isTypeString()) {
+            return other.isTypeString();
+        }
+
+        else return false;
+    }
+
+    public Object getValue() {
+        return this.value;
     }
 }
