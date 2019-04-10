@@ -4,7 +4,13 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
     public static final PASCALetObject NULL = new PASCALetObject();
     public static final PASCALetObject VOID = new PASCALetObject();
 
+    public static final Object PASCALET_OBJECT_INT = 1;
+    public static final Object PASCALET_OBJECT_CHAR = 'a';
+    public static final Object PASCALET_OBJECT_STRING = "string";
+    public static final Object PASCALET_OBJECT_BOOLEAN = true;
+
     private Object value;
+    private Object type; //only used on declaration.
     private boolean constant;
 
     private PASCALetObject(){
@@ -12,21 +18,36 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
         this.constant = false;
     }
 
-    public PASCALetObject(Object v) {
-        if( v == null) {
-            throw new RuntimeException("v == null");
-        }
-
-        this.value = v;
+    //for normal variable declaration
+    public PASCALetObject(Object type) {
+        this.type = type;
         this.constant = false;
+        this.value = null;
 
-        if(!(isBoolean() || isString() || isInteger() || isChar())) {
-            throw new RuntimeException("Invalid data type: " + v + " (" + v.getClass() + ")");
+        this.checkIfTypeIsInSpecification();
+    }
+
+    //for constants
+    public PASCALetObject(Object type, Object value, boolean isConstFlag) {
+        this.type = type;
+        this.value = value;
+        this.constant = isConstFlag;
+
+        this.checkIfTypeIsInSpecification();
+    }
+
+    private void checkIfTypeIsInSpecification() {
+        if(!(isTypeBoolean() || isTypeString() || isTypeInteger() || isTypeChar())) {
+            throw new RuntimeException("Invalid data type: " + this.type + " (" + this.type.getClass() + ")");
         }
     }
 
     public void setConstant(boolean flag) {
         this.constant = flag;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
     }
 
     public boolean asBoolean() {
@@ -54,20 +75,22 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
         return (Object[]) value;
     }
 
-    public boolean isBoolean() {
-        return value instanceof Boolean;
+
+    //Check if given
+    public boolean isTypeBoolean() {
+        return this.type instanceof Boolean;
     }
 
-    public boolean isInteger() {
-        return value instanceof Integer;
+    public boolean isTypeInteger() {
+        return this.type instanceof Integer;
     }
 
-    public boolean isChar() {
-        return value instanceof Character;
+    public boolean isTypeChar() {
+        return this.type instanceof Character;
     }
 
-    public boolean isString() {
-        return value instanceof  String;
+    public boolean isTypeString() {
+        return this.type instanceof String;
     }
 
     public boolean isNull() {
@@ -76,6 +99,28 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
 
     public boolean isVoid() {
         return this == VOID;
+    }
+
+
+    public boolean isValBoolean(Object valueToBeAsigned) {
+        return valueToBeAsigned instanceof Boolean;
+    }
+
+    public boolean isValInteger(Object valueToBeAsigned) {
+        return valueToBeAsigned instanceof Integer;
+    }
+
+    public boolean isValChar(Object valueToBeAsigned) {
+        return valueToBeAsigned instanceof Character;
+    }
+
+    public boolean isValString(Object valueToBeAsigned) {
+        return valueToBeAsigned instanceof  String;
+    }
+
+
+    public Object getType() {
+        return this.type;
     }
 
 

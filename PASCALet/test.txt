@@ -1,12 +1,10 @@
 program alex;
 
-function something(a : integer ; d : string ; x,y,z : integer) : integer ;
-begin
-end;
+Var dec : integer; x,y,z : InTeGer;
+Var s : string;
+Const x = 1;
+Const y = 2;
 
-procedure whatever(a : integer; d : string ; x,y,z : integer);
-begin
-end;
 
 begin
 end.

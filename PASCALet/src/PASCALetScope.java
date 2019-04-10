@@ -17,94 +17,118 @@ public class PASCALetScope {
         this.constants = new HashMap<>();
     }
 
-    //inserts a ariable name key and a value in the variables hashmap.
+    //inserts a value to a variable.
     public void assignVariable(String variableName, PASCALetObject value) {
         this.variables.put(variableName, value);
     }
 
-    //inserts a constant name key and a value to the constants hashmap. CANNOT BE REASSIGNED.
-    public void assignConstant(String constantName, PASCALetObject value) {
+    //Insert variable inside variable map, FOR DECLARATION.
+    public void addVariable(String variableName, String type) {
+        variableName = variableName.toLowerCase();
 
-        if (resolve (constantName) != null) {
-            throw new RuntimeException ("Variable " + constantName + "  already in use. Cannot be a constant.");
+
+        //Variable never used, therefore insert it in our variable name.
+        if(!variables.containsKey(variableName)) {
+             Object pascaletType = ConvertStringToObjectType.start(type);
+             PASCALetObject value = new PASCALetObject(pascaletType);
+             this.assignVariable(variableName, value);
         }
 
-        if (resolveConstant (constantName) == null) {
+        else { //exists already, throw an error!
+             throw new RuntimeException("Variable identifier \"" + variableName + "\" already in use. Cannot be a variable identifier");
+        }
+    }
+
+    //inserts a constant name key and a value to the constants hashmap. FOR DECLARATION CANNOT BE REASSIGNED.
+    public void addConstant(String constantName, PASCALetObject value) {
+        constantName = constantName.toLowerCase();
+
+        //if constant name exists, dont proceed.
+        if (!constants.containsKey(constantName)) {
+            throw new RuntimeException ("Constant identifier \"" + constantName + "\"  already in use. Cannot be a constant identifier.");
+        }
+
+        //if it doesnt, place new constant.
+        else {
             this.constants.put (constantName, value);
         }
 
     }
 
-    //Initial cheecking whether variable exists or not
+    //Assign a value to a variable.
     public void assign(String variableName, PASCALetObject value) {
+        variableName = variableName.toLowerCase();
 
         //if itss a constant, fail it.
-        if(resolveConstant(variableName) != null) {
-            throw new RuntimeException("Cannot assign a constant");
+        if(doesConstantExist(variableName)) {
+            throw new RuntimeException("Cannot assign constant \"" + variableName + "\" a value.");
         }
 
-        //if it exissts, just reasssign it.
-        if(this.resolve(variableName)!= null) {
-            this.reAssign(variableName, value);
-        }
-
-        //if it doesn't exist, create a new entry on the hashmap.
-        else {
+        //its in this scope, give value to that variable.
+        if(this.variables.containsKey(variableName)) {
             this.assignVariable(variableName, value);
         }
 
-    }
-
-    //reassigns an existing variable name with the stated value.
-    public void reAssign(String variableName, PASCALetObject value) {
-
-        if(this.variables.containsKey(variableName)) { //variable is in this scope.
-            this.assignVariable(variableName, value);
+        //Doesn't exist on this scope, so maybe its on the parent.
+        else if(!this.isGlobalScope()) {
+            this.parent.assign(variableName, value);
         }
 
-        else { //not in this scope, so check the parent scope
-            this.parent.reAssign(variableName, value);
-        }
-    }
-
-    //find the variable in this scope.
-    public PASCALetObject resolve(String variableName) {
-        PASCALetObject value = variables.get(variableName);
-
-        if(value != null) { //in this scope.
-            return value;
-        }
-
-        else if (isGlobalScope()) { //it is global, check scope of the parent.
-            return this.parent.resolve(variableName);
-        }
-
-        //new variable.
+        //Doesn't exist at all, throw an error.
         else {
-            return null;
+            throw new RuntimeException("Variable \"" + variableName + "\" does not exist / has never been declared.");
         }
     }
 
-    //find the constant in this scope.
-    public PASCALetObject resolveConstant(String constantName) {
+    //Finds if the constant exists on the scope OR global scope.
+    public boolean doesConstantExist(String constantName) {
+        constantName = constantName.toLowerCase();
 
-        PASCALetObject value = variables.get(constantName);
-
-        if(value != null) {
-            return value;
+        if(this.constants.containsKey(constantName)) {
+            return true;
         }
 
-        else if (isGlobalScope()) {
-            return this.parent.resolveConstant(constantName);
+        else if (!this.isGlobalScope()) { //check global scope if its there.
+            return this.parent.doesConstantExist(constantName);
         }
 
-        else { //new constant
-            return null;
+        else return false;
+    }
+
+    //give value of the constant
+    public PASCALetObject ressolveConstant(String constantName) {
+        constantName = constantName.toLowerCase();
+
+        if(this.constants.containsKey(constantName)) {
+            return this.constants.get(constantName);
         }
+
+        //check global, baka andun.
+        else if (!this.isGlobalScope()) {
+            return this.parent.ressolveConstant(constantName);
+        }
+
+        throw new RuntimeException("Constant \"" + constantName + "\" does not exist / has never been declared.");
+    }
+
+    //give value of the variable
+    public PASCALetObject resolveVariable(String variableName) {
+        variableName = variableName.toLowerCase();
+
+        if(this.variables.containsKey(variableName)) {
+            return this.variables.get(variableName);
+        }
+
+        //check global, baka andun.
+        else if (!this.isGlobalScope()) {
+            return this.parent.resolveVariable(variableName);
+        }
+
+        throw new RuntimeException("Variable \"" + variableName + "\" does not exist / has never been declared.");
     }
 
     public boolean isGlobalScope() {
-        return parent != null;
+        return parent == null;
     }
 
     public PASCALetScope getParent() {
@@ -114,7 +138,7 @@ public class PASCALetScope {
     public String VariablesToString() {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry<String, PASCALetObject> var: variables.entrySet()) {
-            sb.append(var.getKey()).append("->").append(var.getValue()).append(",");
+            sb.append(var.getKey()).append("->").append(var.getValue().getType()).append(",");
         }
         return sb.toString();
     }
@@ -122,7 +146,7 @@ public class PASCALetScope {
     public String ConstantToString() {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry<String, PASCALetObject> con: constants.entrySet()) {
-            sb.append(con.getKey()).append("->").append(con.getValue()).append(",");
+            sb.append(con.getKey()).append("->").append(con.getValue().getType()).append(",");
         }
         return sb.toString();
     }

@@ -1,8 +1,5 @@
-import org.antlr.v4.runtime.tree.*;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -75,9 +72,26 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         return super.visitString(ctx);
     }
 
-    @Override //
+    @Override //Setting up variable declaration.
     public PASCALetObject visitVariableDeclarationPart (PASCALetGrammarParser.VariableDeclarationPartContext ctx) {
-        return super.visitVariableDeclarationPart(ctx);
+        List<PASCALetGrammarParser.VariableDeclarationContext> varDeclarationList = ctx.variableDeclaration();
+        int varDecListSize = varDeclarationList.size();
+
+        //Number of variable declaration does not define actual declaration.
+        //Inside there are the true variable declarations in identifier list.
+        for(int x = 0; x < varDecListSize; x++) {
+
+            //Iterate over all identifiers.
+            List<PASCALetGrammarParser.IdentifierContext> identifierList = varDeclarationList.get(x).identifierList().identifier();
+            int identifierSize = identifierList.size();
+            for(int i = 0; i < identifierSize; i++) {
+                scope.addVariable(identifierList.get(i).getText(), varDeclarationList.get(x).type().getText());
+            }
+        }
+
+        //System.out.println(scope.VariablesToString());
+
+        return PASCALetObject.VOID;
     }
 
     @Override //

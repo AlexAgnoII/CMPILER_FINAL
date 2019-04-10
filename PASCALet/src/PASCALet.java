@@ -24,17 +24,22 @@ public class PASCALet {
         functionVisitor.visit (tree);
 
         //Gather all procedures.
-        HashMap<String, PASCALetProcedure> procedure = new HashMap<>();
-        PASCALetProcedureVisitor procedureVisitor = new PASCALetProcedureVisitor(procedure);
+        HashMap<String, PASCALetProcedure> procedures = new HashMap<>();
+        PASCALetProcedureVisitor procedureVisitor = new PASCALetProcedureVisitor(procedures);
         procedureVisitor.visit(tree);
 
-        functions.get("something5").invoke(null, null, null, null);
-        procedure.get("whatever5").invoke(null, null, null, null);
-
         //test
-        ShowAllSubroutines(functions, procedure);
+        //ShowAllSubroutines(functions, procedure);
 
         //Evaluation visitor here:
+        PASCALetScope pScope = new PASCALetScope(null);
+        PASCALetVisitor pVisitor = new PASCALetVisitor(pScope, functions, procedures);
+
+        System.out.println("Procedure size: " + functions.size());
+        System.out.println("Function size: " + procedures.size());
+
+        //START PASCALET
+        pVisitor.visit(tree);
 
 
 
