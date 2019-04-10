@@ -43,7 +43,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         String constantName = ctx.identifier().getText();
         PASCALetObject pObject = this.visit(ctx.constant());
         pObject.setConstant(true);
-        scope.addConstant(constantName, pObject);
+        scope.addConstant(constantName, pObject, ctx);
 
         System.out.println(scope.ConstantToString());
 
@@ -117,7 +117,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             List<PASCALetGrammarParser.IdentifierContext> identifierList = varDeclarationList.get(x).identifierList().identifier();
             int identifierSize = identifierList.size();
             for(int i = 0; i < identifierSize; i++) {
-                scope.addVariable(identifierList.get(i).getText(), varDeclarationList.get(x).type().getText());
+                scope.addVariable(identifierList.get(i).getText(), varDeclarationList.get(x).type().getText(), ctx);
             }
         }
 
@@ -209,7 +209,48 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitSimpleStatement (PASCALetGrammarParser.SimpleStatementContext ctx) {
-        return super.visitSimpleStatement(ctx);
+
+        if(ctx.emptyStatement() == null) {
+
+
+            if(ctx.assignmentStatement() != null) {
+                this.performAssignment(ctx.assignmentStatement());
+            }
+
+            else if (ctx.procedureStatement() != null) {
+                this.performProceedureCall(ctx.procedureStatement());
+
+            }
+
+            else if (ctx.reservedStatements() != null) {
+               this.performRservedStatement(ctx.reservedStatements());
+
+            }
+        }
+
+
+        return PASCALetObject.VOID;
+    }
+
+    private void performAssignment(PASCALetGrammarParser.AssignmentStatementContext ctx) {
+
+        String identifierName = ctx.variable().getText();
+        PASCALetObject pObject = this.visit(ctx.expression());
+
+        if(scope.isThisAVariable(identifierName)) {
+             System.out.println(identifierName + " is a variable!");
+
+
+
+        }
+    }
+
+    private void performProceedureCall(PASCALetGrammarParser.ProcedureStatementContext procedureStatementContext) {
+
+    }
+
+    private void performRservedStatement(PASCALetGrammarParser.ReservedStatementsContext reservedStatementsContext) {
+
     }
 
     @Override
@@ -229,7 +270,9 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitStructuredStatement (PASCALetGrammarParser.StructuredStatementContext ctx) {
-        return super.visitStructuredStatement(ctx);
+        System.out.println("STRUCTURED HERE");
+
+        return PASCALetObject.VOID;
     }
 
     @Override

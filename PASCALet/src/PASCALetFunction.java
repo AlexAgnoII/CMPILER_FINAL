@@ -1,4 +1,3 @@
-import com.sun.source.tree.Scope;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public class PASCALetFunction {
             List<PASCALetGrammarParser.IdentifierContext> identifiers = this.params.get(x).identifierList().identifier();
             for(int y = 0; y < identifiers.size(); y++) {
                 PASCALetObject value = pVisitor.visit(actualParams.get(actualParamindex));
-                funcScope.assignVariable(identifiers.get(actualParamindex).getText(), value);
+                funcScope.addVariableAndValue(identifiers.get(actualParamindex).getText(), value);
                 actualParamindex++;
             }
         }

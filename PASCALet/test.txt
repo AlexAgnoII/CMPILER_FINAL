@@ -1,13 +1,18 @@
 program alex;
 
-Const x = -1;
-Const y = +3;
-const a = 'a';
-
-Var dec : integer; w,c,z : InTeGer;
 Var s : string;
+Const y = -1;
+const y = 'a';
+
+Var x : string;
+Var x : integer;
 
 
+procedure something();
+begin
+end;
 
 begin
+        s:='pewdiepie';
+        o:='a';
 end.
