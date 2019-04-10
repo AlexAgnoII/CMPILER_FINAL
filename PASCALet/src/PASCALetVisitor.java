@@ -68,16 +68,9 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
         else if(ctx.string() != null) {
             String value = ctx.string().getText();
-            value = value.replace("'", ""); //to make it a character.
+            value = value.replace("'", "");
 
-            //char
-            if(value.length() == 1) {
-                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_CHAR, value);
-            }
-            //string
-            else {
-                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_STRING, value);
-            }
+            pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_STRING, value);
 
         }
 
@@ -217,11 +210,13 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                 this.performAssignment(ctx.assignmentStatement());
             }
 
+            //TODO: Implement mult operators.
             else if (ctx.procedureStatement() != null) {
                 this.performProceedureCall(ctx.procedureStatement());
 
             }
 
+            //TODO: Implement reserveStatements operators.
             else if (ctx.reservedStatements() != null) {
                this.performRservedStatement(ctx.reservedStatements());
 
@@ -236,13 +231,10 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
         String identifierName = ctx.variable().getText();
         PASCALetObject pObject = this.visit(ctx.expression());
+        scope.assignVariable(identifierName, pObject, ctx);
 
-        if(scope.isThisAVariable(identifierName)) {
-             System.out.println(identifierName + " is a variable!");
-
-
-
-        }
+        //for testing only.
+        System.out.println(scope.VariablesToString());
     }
 
     private void performProceedureCall(PASCALetGrammarParser.ProcedureStatementContext procedureStatementContext) {
@@ -310,44 +302,286 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         return super.visitVariable(ctx);
     }
 
-    @Override
+    @Override //MUST BE NUMBERS ONLY
     public PASCALetObject visitExpression (PASCALetGrammarParser.ExpressionContext ctx) {
-        return super.visitExpression(ctx);
+        PASCALetObject pObject = null;
+
+
+        if(ctx.relationaloperator() != null && ctx.expression() != null) {
+            PASCALetObject leftHandSide = this.visit(ctx.simpleExpression());
+            PASCALetObject rightHandSide = this.visit(ctx.expression());
+            boolean result = false;
+
+            if(leftHandSide.isTypeInteger() && rightHandSide.isTypeInteger()) {
+                result = this.relationalIntegers(leftHandSide.asInteger(), rightHandSide.asInteger(), ctx);
+            }
+
+            else if(leftHandSide.isTypeString() && rightHandSide.isTypeString()) {
+                result = this.relationalStrings(leftHandSide.asString(), rightHandSide.asString(), ctx);
+            }
+
+            //type mismatch, throw.
+            else {
+                String errorMsg = "Type mismatch / invalid type for evaluation: ";
+                throw new PASCALetException(ctx, errorMsg);
+
+            }
+
+            System.out.println(result);
+
+            //pObject in the end becomes a boolean value.
+            pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
+        }
+
+        //no relational, just do simple expression.
+        else {
+            pObject =  this.visit(ctx.simpleExpression());
+        }
+
+        return pObject;
+    }
+
+    private boolean relationalIntegers(int lhValue, int rhValue, PASCALetGrammarParser.ExpressionContext ctx) {
+
+        if(ctx.relationaloperator().EQUALS() != null) {
+            return lhValue == rhValue;
+        }
+
+        else if(ctx.relationaloperator().GREATERTHAN() != null) {
+            return lhValue > rhValue;
+
+        }
+        else if(ctx.relationaloperator().GREATERTHANOREQUALS() != null) {
+            return lhValue >= rhValue;
+
+        }
+        else if(ctx.relationaloperator().LESSTHAN() != null) {
+            return lhValue < rhValue;
+
+        }
+        else if(ctx.relationaloperator().LESSTHANOREQUALS() != null) {
+            return lhValue <= rhValue;
+
+        }
+        else if(ctx.relationaloperator().NOTEQUALS() != null) {
+            return lhValue != rhValue;
+        }
+
+        String msg = "Weird symbol found at : ";
+        throw new PASCALetException(ctx, msg);
+    }
+
+    private boolean relationalStrings(String lhValue, String rhValue, PASCALetGrammarParser.ExpressionContext ctx) {
+        lhValue = lhValue.toLowerCase();
+        rhValue = rhValue.toLowerCase();
+
+        if(ctx.relationaloperator().EQUALS() != null) {
+            return lhValue.equalsIgnoreCase(rhValue);
+        }
+
+        else if(ctx.relationaloperator().GREATERTHAN() != null) {
+            return lhValue.compareTo(rhValue) > 0;
+
+        }
+
+        else if(ctx.relationaloperator().LESSTHAN() != null) {
+            return lhValue.compareTo(rhValue) < 0;
+
+        }
+
+        else if(ctx.relationaloperator().NOTEQUALS() != null) {
+            return !lhValue.equalsIgnoreCase(rhValue);
+        }
+
+        else if(ctx.relationaloperator().GREATERTHANOREQUALS() != null) {
+            return lhValue.equalsIgnoreCase(rhValue) || lhValue.compareTo(rhValue) > 0;
+
+        }
+
+        else if(ctx.relationaloperator().LESSTHANOREQUALS() != null) {
+            return lhValue.equalsIgnoreCase(rhValue) || lhValue.compareTo(rhValue) < 0;
+
+        }
+
+        String msg = "Weird symbol found at : ";
+        throw new PASCALetException(ctx, msg);
+
     }
 
     @Override
     public PASCALetObject visitSimpleExpression (PASCALetGrammarParser.SimpleExpressionContext ctx) {
-        return super.visitSimpleExpression(ctx);
+        PASCALetObject pObject = null;
+
+        //TODO: Implement additive operators.
+        if(ctx.additiveOperator() != null && ctx.simpleExpression() != null) {
+            boolean plusPresent = ctx.additiveOperator().PLUS() != null;
+            boolean minusPresent = ctx.additiveOperator().MINUS() != null;
+
+            //must be integers only.
+            if(plusPresent || minusPresent) {
+
+                if(plusPresent) {
+
+                }
+
+                else if (minusPresent) {
+
+                }
+
+            }
+
+            //This must be a relational operator, boolean values only.
+            else  {
+
+            }
+
+        }
+
+        //no operator, just return something inside the term.
+        else {
+            pObject = this.visit(ctx.term());
+        }
+
+        return pObject; //return a string of EXPRESSION.
     }
 
     @Override
     public PASCALetObject visitTerm (PASCALetGrammarParser.TermContext ctx) {
-        return super.visitTerm(ctx);
-    }
+        PASCALetObject pObject = null;
 
-    @Override
-    public PASCALetObject visitAdditiveOperator (PASCALetGrammarParser.AdditiveOperatorContext ctx) {
-        return super.visitAdditiveOperator(ctx);
-    }
+        //TODO: Implement mult operators.
+        if(ctx.multiplicativeOperator() != null && ctx.term() != null) {
 
-    @Override
-    public PASCALetObject visitMultiplicativeOperator (PASCALetGrammarParser.MultiplicativeOperatorContext ctx) {
-        return super.visitMultiplicativeOperator(ctx);
-    }
+            boolean divPresent = ctx.multiplicativeOperator().SLASH() != null;
+            boolean multPresent = ctx.multiplicativeOperator().STAR() != null;
+            boolean modPresent = ctx.multiplicativeOperator().MOD() != null;
 
-    @Override
-    public PASCALetObject visitRelationaloperator (PASCALetGrammarParser.RelationaloperatorContext ctx) {
-        return super.visitRelationaloperator(ctx);
+            //integers only.
+            if(divPresent || multPresent || modPresent) {
+
+            }
+
+            //its boolean only.
+            else {
+
+            }
+
+        }
+
+        else {
+            pObject = this.visit(ctx.signedFactor());
+        }
+
+
+
+        return pObject;
     }
 
     @Override
     public PASCALetObject visitSignedFactor (PASCALetGrammarParser.SignedFactorContext ctx) {
-        return super.visitSignedFactor(ctx);
+        PASCALetObject pObject;
+
+        pObject = this.visit(ctx.factor());
+
+        //if + or - is present, it should ONLY be an integer or a variable containing int.
+        if(ctx.PLUS() != null || ctx.MINUS() != null) {
+
+            if(pObject.isTypeInteger()) {
+                int number = pObject.asInteger();
+
+                if(ctx.MINUS() != null) {
+                    number = -number;
+                }
+
+                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_INT, number);
+            }
+
+            else {
+                String errorMsg = "PASCALet object cannot have + / - symbols: ";
+                throw new PASCALetException(ctx, errorMsg);
+            }
+        }
+
+        return pObject;
     }
 
     @Override
     public PASCALetObject visitFactor (PASCALetGrammarParser.FactorContext ctx) {
-        return super.visitFactor(ctx);
+        PASCALetObject pObject = null;
+
+        //it is a variable
+        if(ctx.variable() != null) {
+            String variableName = ctx.variable().getText();
+            pObject = scope.getVariableValue(variableName, ctx);
+
+            //if nothing is inside, lets throw an error.
+            if(pObject.getValue() == null) {
+                String errorMsg = "Invalid evaluation. Variable \"" + variableName  + "\" has a null value: ";
+                throw new PASCALetException(ctx, errorMsg);
+            }
+        }
+
+        //its another expression
+        else if (ctx.expression() != null) {
+            pObject = this.visit(ctx.expression());
+        }
+
+        //TODO: To implement function designator.
+        else if (ctx.functionDesignator() != null){
+
+        }
+
+        //a constant value.
+        else if(ctx.unsignedConstant() != null) {
+
+            //it is a string.
+            if(ctx.unsignedConstant().string() != null) {
+                String word = ctx.unsignedConstant().string().getText();
+                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_STRING, word);
+            }
+
+            //its an integer
+            else if (ctx.unsignedConstant().unsignedInteger() != null) {
+                int number = Integer.parseInt(ctx.unsignedConstant().unsignedInteger().getText());
+                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_INT, number);
+            }
+
+            else {
+                String errorMsg = "Error factor node, cannot identify this random data (not int or string): ";
+                throw new PASCALetException(ctx, errorMsg);
+            }
+        }
+
+        //itself
+        else if (ctx.factor() != null) {
+            pObject = this.visit(ctx.factor());
+        }
+
+        //boolean
+        else if (ctx.bool() != null) {
+            String boolValue = ctx.bool().getText();
+
+            if(boolValue.equalsIgnoreCase("true")) {
+                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, true);
+            }
+
+            else if(boolValue.equalsIgnoreCase("false")) {
+                pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, false);
+            }
+
+            else {
+                String errorMsg = "Factor node error, its not true or false, what is this: ";
+                throw new PASCALetException(ctx, errorMsg);
+            }
+        }
+
+        else {
+            String errorMsg = "Error visiting factor node: ";
+            throw new PASCALetException(ctx, errorMsg);
+        }
+
+
+        return pObject;
     }
 
     @Override

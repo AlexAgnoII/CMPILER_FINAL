@@ -146,22 +146,6 @@ public class PASCALetScope {
     }
 
 
-    public boolean isThisAVariable(String variableName) {
-        variableName = variableName.toLowerCase();
-
-        if(this.variables.containsKey(variableName)) {
-            return true;
-        }
-        else if (!this.isGlobalScope()) {
-            return this.parent.isThisAVariable(variableName);
-        }
-        else {
-            return false;
-        }
-
-    }
-
-
     public boolean isGlobalScope() {
         return parent == null;
     }

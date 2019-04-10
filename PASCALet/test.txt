@@ -1,18 +1,11 @@
 program alex;
 
-Var s : string;
-Const y = -1;
-const y = 'a';
-
-Var x : string;
-Var x : integer;
+Var y , x, a: integer;
 
 
-procedure something();
-begin
-end;
 
 begin
-        s:='pewdiepie';
-        o:='a';
+        a := -5;
+        x := a;
+        y := 10;
 end.

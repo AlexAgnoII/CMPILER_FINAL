@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cbe32a5a-4b38-43fa-913d-ab6b26c534b8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/PASCALet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PASCALetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PASCALetScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetScope.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PASCALetVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PASCALetVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test.txt" afterDir="false" />
@@ -23,8 +21,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PASCALet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="37" selection-start-line="37" selection-start-column="2" selection-end-line="38" selection-end-column="68" />
+            <state relative-caret-position="629">
+              <caret line="37" column="68" lean-forward="true" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,8 +33,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+            <state relative-caret-position="136">
+              <caret line="8" column="15" lean-forward="true" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -44,27 +42,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PASCALetGrammar.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+            <state relative-caret-position="1224">
+              <caret line="195" column="60" lean-forward="true" selection-start-line="195" selection-start-column="60" selection-end-line="195" selection-end-column="60" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/PASCALetVisitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="70" column="69" selection-start-line="70" selection-start-column="69" selection-end-line="70" selection-end-column="69" />
+            <state relative-caret-position="333">
+              <caret line="218" column="58" lean-forward="true" selection-start-line="218" selection-start-column="58" selection-end-line="218" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3145#3146#0" expanded="true" />
-                <element signature="e#3281#3282#0" expanded="true" />
-                <element signature="e#3423#3424#0" expanded="true" />
-                <element signature="e#4973#4974#0" expanded="true" />
-                <element signature="e#8540#8541#0" expanded="true" />
-                <element signature="e#9183#9184#0" expanded="true" />
-                <element signature="e#9645#9646#0" expanded="true" />
-                <element signature="e#10487#10488#0" expanded="true" />
+                <element signature="e#2905#2906#0" expanded="true" />
+                <element signature="e#3041#3042#0" expanded="true" />
+                <element signature="e#3183#3184#0" expanded="true" />
+                <element signature="e#4738#4739#0" expanded="true" />
+                <element signature="e#9602#9603#0" expanded="true" />
+                <element signature="e#9648#9649#0" expanded="true" />
+                <element signature="e#10244#10245#0" expanded="true" />
+                <element signature="e#10291#10292#0" expanded="true" />
+                <element signature="e#11007#12022#0" />
+                <element signature="e#12103#12237#0" />
               </folding>
             </state>
           </provider>
@@ -73,24 +73,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PASCALetException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/PASCALetScope.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="149" column="92" lean-forward="true" selection-start-line="149" selection-start-column="92" selection-end-line="149" selection-end-column="92" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#243#244#0" expanded="true" />
-                <element signature="e#269#270#0" expanded="true" />
-                <element signature="e#4789#4790#0" expanded="true" />
-                <element signature="e#4858#4859#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="170">
+              <caret line="10" column="58" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -98,8 +82,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PASCALetObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="509">
-              <caret line="139" column="38" selection-start-line="139" selection-start-column="38" selection-end-line="139" selection-end-column="38" />
+            <state relative-caret-position="340">
+              <caret line="29" column="48" selection-start-line="29" selection-start-column="48" selection-end-line="29" selection-end-column="48" />
               <folding>
                 <element signature="e#3529#3530#0" expanded="true" />
                 <element signature="e#4031#4032#0" expanded="true" />
@@ -119,9 +103,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>simple</find>
-      <find>if</find>
-      <find>READ</find>
       <find>readln</find>
       <find>constantDefinition</find>
       <find>identifierList</find>
@@ -140,7 +121,6 @@
       <find>variable</find>
       <find>functiondeclarationcon</find>
       <find>visitTypeIdentifier</find>
-      <find>expression</find>
       <find>type</find>
       <find>empty</find>
       <find>parameter</find>
@@ -149,6 +129,10 @@
       <find>identifierLi</find>
       <find>constant</find>
       <find>constantCont</find>
+      <find>simpleStatement</find>
+      <find>struc</find>
+      <find>simple</find>
+      <find>expression</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -168,10 +152,10 @@
         <option value="$PROJECT_DIR$/src/PASCALetFunctionVisitor.java" />
         <option value="$PROJECT_DIR$/src/PASCALetProcedureVisitor.java" />
         <option value="$PROJECT_DIR$/src/PASCALet.java" />
-        <option value="$PROJECT_DIR$/test.txt" />
-        <option value="$PROJECT_DIR$/src/PASCALetVisitor.java" />
         <option value="$PROJECT_DIR$/src/PASCALetObject.java" />
         <option value="$PROJECT_DIR$/src/PASCALetScope.java" />
+        <option value="$PROJECT_DIR$/test.txt" />
+        <option value="$PROJECT_DIR$/src/PASCALetVisitor.java" />
       </list>
     </option>
   </component>
@@ -297,11 +281,11 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2892741" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2892741" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="TODO" order="6" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32936078" />
       <window_info anchor="bottom" id="Tool Output" order="8" sideWeight="0.51044774" weight="0.17885265" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32936078" />
@@ -731,59 +715,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.txt">
+    <entry file="jar://D:/AlexanderII/Downloads/antlr-4.7.2-complete.jar!/org/antlr/v4/runtime/ParserRuleContext.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PASCALet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="37" selection-start-line="37" selection-start-column="2" selection-end-line="38" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PASCALetException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PASCALetGrammar.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/PASCALetVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="70" column="69" selection-start-line="70" selection-start-column="69" selection-end-line="70" selection-end-column="69" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3145#3146#0" expanded="true" />
-            <element signature="e#3281#3282#0" expanded="true" />
-            <element signature="e#3423#3424#0" expanded="true" />
-            <element signature="e#4973#4974#0" expanded="true" />
-            <element signature="e#8540#8541#0" expanded="true" />
-            <element signature="e#9183#9184#0" expanded="true" />
-            <element signature="e#9645#9646#0" expanded="true" />
-            <element signature="e#10487#10488#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="153">
+          <caret line="10" column="53" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PASCALetObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="139" column="38" selection-start-line="139" selection-start-column="38" selection-end-line="139" selection-end-column="38" />
+        <state relative-caret-position="340">
+          <caret line="29" column="48" selection-start-line="29" selection-start-column="48" selection-end-line="29" selection-end-column="48" />
           <folding>
             <element signature="e#3529#3530#0" expanded="true" />
             <element signature="e#4031#4032#0" expanded="true" />
@@ -793,14 +735,65 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PASCALetScope.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="149" column="92" lean-forward="true" selection-start-line="149" selection-start-column="92" selection-end-line="149" selection-end-column="92" />
+        <state relative-caret-position="192">
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#243#244#0" expanded="true" />
             <element signature="e#269#270#0" expanded="true" />
-            <element signature="e#4789#4790#0" expanded="true" />
-            <element signature="e#4858#4859#0" expanded="true" />
+            <element signature="e#5324#5325#0" expanded="true" />
+            <element signature="e#5393#5394#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PASCALetException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="58" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PASCALet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="37" column="68" lean-forward="true" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="15" lean-forward="true" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PASCALetGrammar.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1224">
+          <caret line="195" column="60" lean-forward="true" selection-start-line="195" selection-start-column="60" selection-end-line="195" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PASCALetVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="218" column="58" lean-forward="true" selection-start-line="218" selection-start-column="58" selection-end-line="218" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2905#2906#0" expanded="true" />
+            <element signature="e#3041#3042#0" expanded="true" />
+            <element signature="e#3183#3184#0" expanded="true" />
+            <element signature="e#4738#4739#0" expanded="true" />
+            <element signature="e#9602#9603#0" expanded="true" />
+            <element signature="e#9648#9649#0" expanded="true" />
+            <element signature="e#10244#10245#0" expanded="true" />
+            <element signature="e#10291#10292#0" expanded="true" />
+            <element signature="e#11007#12022#0" />
+            <element signature="e#12103#12237#0" />
           </folding>
         </state>
       </provider>
