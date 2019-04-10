@@ -274,10 +274,13 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         PASCALetObject pObject = null;
 
 
+        //TODO finish relational operators.
         if(ctx.relationaloperator() != null && ctx.expression() != null) {
             PASCALetObject leftHandSide = this.visit(ctx.simpleExpression());
             PASCALetObject rightHandSide = this.visit(ctx.expression());
             boolean result = false;
+            this.checkIfVariableHasValidValue(leftHandSide.getValue(), ctx);
+            this.checkIfVariableHasValidValue(rightHandSide.getValue(), ctx);
 
             if(leftHandSide.isTypeInteger() && rightHandSide.isTypeInteger()) {
                 result = this.relationalIntegers(leftHandSide.asInteger(), rightHandSide.asInteger(), ctx);
@@ -291,7 +294,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             else {
                 String errorMsg = "Type mismatch / invalid type for evaluation: ";
                 throw new PASCALetException(ctx, errorMsg);
-
             }
 
             System.out.println(result);
@@ -339,11 +341,9 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     }
 
     private boolean relationalStrings(String lhValue, String rhValue, PASCALetGrammarParser.ExpressionContext ctx) {
-        lhValue = lhValue.toLowerCase();
-        rhValue = rhValue.toLowerCase();
 
         if(ctx.relationaloperator().EQUALS() != null) {
-            return lhValue.equalsIgnoreCase(rhValue);
+            return lhValue.equals(rhValue);
         }
 
         else if(ctx.relationaloperator().GREATERTHAN() != null) {
@@ -361,12 +361,12 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         }
 
         else if(ctx.relationaloperator().GREATERTHANOREQUALS() != null) {
-            return lhValue.equalsIgnoreCase(rhValue) || lhValue.compareTo(rhValue) > 0;
+            return lhValue.equals(rhValue) || lhValue.compareTo(rhValue) > 0;
 
         }
 
         else if(ctx.relationaloperator().LESSTHANOREQUALS() != null) {
-            return lhValue.equalsIgnoreCase(rhValue) || lhValue.compareTo(rhValue) < 0;
+            return lhValue.equals(rhValue) || lhValue.compareTo(rhValue) < 0;
 
         }
 
@@ -379,29 +379,60 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     public PASCALetObject visitSimpleExpression (PASCALetGrammarParser.SimpleExpressionContext ctx) {
         PASCALetObject pObject = null;
 
-        //TODO: Implement additive operators.
         if(ctx.additiveOperator() != null && ctx.simpleExpression() != null) {
             boolean plusPresent = ctx.additiveOperator().PLUS() != null;
             boolean minusPresent = ctx.additiveOperator().MINUS() != null;
 
+            PASCALetObject leftHandSide = this.visit(ctx.term());
+            PASCALetObject rightHandSide = this.visit(ctx.simpleExpression());
+            this.checkIfVariableHasValidValue(leftHandSide.getValue(), ctx);
+            this.checkIfVariableHasValidValue(rightHandSide.getValue(), ctx);
+
             //must be integers only.
             if(plusPresent || minusPresent) {
 
-                if(plusPresent) {
+                if(leftHandSide.isTypeInteger() && rightHandSide.isTypeInteger()) {
+                    int lhsValue = leftHandSide.asInteger();
+                    int rhsValue = rightHandSide.asInteger();
+                    int result = 0;
 
+                    if(plusPresent) {
+                        result = lhsValue + rhsValue;
+                    }
+
+                    else if (minusPresent) {
+                        result = lhsValue - rhsValue;
+                    }
+
+                    else {
+                        String errMgs = "Error SimpleExpression, missing operator +, -: ";
+                        throw new PASCALetException(ctx, errMgs);
+                    }
+
+                    pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_INT, result);
                 }
 
-                else if (minusPresent) {
-
+                else {
+                    String errMsg = "Invalid evaluation. Both values must be of type integer: ";
+                    throw new PASCALetException(ctx, errMsg);
                 }
-
             }
 
             //This must be a relational operator, boolean values only.
-            else  {
+            else  { //todo should we add checker again here that only allowss boolean?
+                if(ctx.additiveOperator().OR() != null) {
+                    boolean lhsValue = leftHandSide.asBoolean();
+                    boolean rhsValue = rightHandSide.asBoolean();
+                    boolean result = lhsValue || rhsValue;
 
+                    pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
+                }
+
+                else {
+                    String errMsg = "SimpleExpression error, missing OR operator: ";
+                    throw new PASCALetException(ctx, errMsg);
+                }
             }
-
         }
 
         //no operator, just return something inside the term.
@@ -416,7 +447,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     public PASCALetObject visitTerm (PASCALetGrammarParser.TermContext ctx) {
         PASCALetObject pObject = null;
 
-        //TODO: Implement mult operators.
         if(ctx.multiplicativeOperator() != null && ctx.term() != null) {
 
             boolean divPresent = ctx.multiplicativeOperator().SLASH() != null;
@@ -479,7 +509,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             }
 
             //its boolean only.
-            else {
+            else {//TODO place checker that only boolean'ss allowed?
                 boolean lhsValue = leftHandSide.asBoolean();
                 boolean rhsValue = rightHandSide.asBoolean();
 
@@ -542,14 +572,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         if(ctx.variable() != null) {
             String variableName = ctx.variable().getText();
             pObject = scope.getVariableValue(variableName, ctx);
-
-            //TODO need to change this, null error must show when doing evaluation, but assignment is okay.
-            //if nothing is inside, lets throw an error.
-            /* COmmented out for now.
-            if(pObject.getValue() == null) {
-                String errorMsg = "Invalid evaluation. Variable \"" + variableName  + "\" has a null value: ";
-                throw new PASCALetException(ctx, errorMsg);
-            }*/
         }
 
         //its another expression

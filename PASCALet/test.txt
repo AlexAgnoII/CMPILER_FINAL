@@ -6,7 +6,8 @@ var a, b, c : boolean;
 
 
 begin
-    a:=true;
-    b:=false;
-    c:= (a and b ) and true;
+    y:=7;
+    x:= -5;
+    a:= y < x;
+
 end.
