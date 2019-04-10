@@ -1,11 +1,12 @@
 program alex;
 
-Var y , x, a: integer;
+Var y , x: integer;
+var a, b, c : boolean;
 
 
 
 begin
-        a := -5;
-        x := a;
-        y := 10;
+    a:=true;
+    b:=false;
+    c:= (a and b ) and true;
 end.

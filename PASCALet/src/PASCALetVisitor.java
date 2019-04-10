@@ -1,3 +1,5 @@
+import org.antlr.v4.runtime.ParserRuleContext;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -75,26 +77,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         }
 
         return pObject;
-    }
-
-    @Override
-    public PASCALetObject visitUnsignedInteger (PASCALetGrammarParser.UnsignedIntegerContext ctx) {
-        return super.visitUnsignedInteger(ctx);
-    }
-
-    @Override
-    public PASCALetObject visitSign (PASCALetGrammarParser.SignContext ctx) {
-        return super.visitSign(ctx);
-    }
-
-    @Override
-    public PASCALetObject visitBool (PASCALetGrammarParser.BoolContext ctx) {
-        return super.visitBool(ctx);
-    }
-
-    @Override
-    public PASCALetObject visitString (PASCALetGrammarParser.StringContext ctx) {
-        return super.visitString(ctx);
     }
 
     @Override //Setting up variable declaration.
@@ -191,16 +173,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     }
 
     @Override
-    public PASCALetObject visitStatements (PASCALetGrammarParser.StatementsContext ctx) {
-        return super.visitStatements(ctx);
-    }
-
-    @Override
-    public PASCALetObject visitStatement (PASCALetGrammarParser.StatementContext ctx) {
-        return super.visitStatement(ctx);
-    }
-
-    @Override
     public PASCALetObject visitSimpleStatement (PASCALetGrammarParser.SimpleStatementContext ctx) {
 
         if(ctx.emptyStatement() == null) {
@@ -210,7 +182,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                 this.performAssignment(ctx.assignmentStatement());
             }
 
-            //TODO: Implement mult operators.
+            //TODO: Implement procedure calls
             else if (ctx.procedureStatement() != null) {
                 this.performProceedureCall(ctx.procedureStatement());
 
@@ -295,11 +267,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     @Override
     public PASCALetObject visitAssignmentStatement (PASCALetGrammarParser.AssignmentStatementContext ctx) {
         return super.visitAssignmentStatement(ctx);
-    }
-
-    @Override
-    public PASCALetObject visitVariable (PASCALetGrammarParser.VariableContext ctx) {
-        return super.visitVariable(ctx);
     }
 
     @Override //MUST BE NUMBERS ONLY
@@ -456,14 +423,75 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             boolean multPresent = ctx.multiplicativeOperator().STAR() != null;
             boolean modPresent = ctx.multiplicativeOperator().MOD() != null;
 
+            PASCALetObject leftHandSide = this.visit(ctx.signedFactor());
+            PASCALetObject rightHandSide = this.visit(ctx.term());
+            this.checkIfVariableHasValidValue(leftHandSide.getValue(), ctx);
+            this.checkIfVariableHasValidValue(rightHandSide.getValue(), ctx);
+
             //integers only.
             if(divPresent || multPresent || modPresent) {
+                if(leftHandSide.isTypeInteger() && rightHandSide.isTypeInteger()) {
+                    int lhsValue = leftHandSide.asInteger();
+                    int rhsValue = rightHandSide.asInteger();
+                    int result = 0;
 
+                    if(divPresent) {
+                        if(rhsValue == 0) {
+                            this.divisionByZeroError(ctx);
+                        }
+
+                        result = lhsValue / rhsValue;
+                    }
+                    else if(modPresent) {
+                        if(rhsValue == 0) {
+                            this.divisionByZeroError(ctx);
+                        }
+
+                        result = lhsValue / rhsValue;
+                    }
+                    else if(multPresent) {
+                        result = lhsValue * rhsValue;
+                    }
+                    else {
+                        String errMsg = "Term node error, expecting *, /, % operator.";
+                        throw new PASCALetException(ctx, errMsg);
+                    }
+
+                    pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_INT, result);
+                }
+
+                else { //trhow error because one of them or BOTH is NOT an integer.
+                    String symbol = "";
+                    if(divPresent) {
+                        symbol = "/";
+                    }
+                    else if(multPresent) {
+                        symbol = "*";
+                    }
+
+                    else if (modPresent) {
+                        symbol = "%";
+                    }
+
+                    String errorMsg = "Invalid operation \"" + symbol  + "\" both values must have type integer: ";
+                    throw new PASCALetException(ctx, errorMsg);
+                }
             }
 
             //its boolean only.
             else {
+                boolean lhsValue = leftHandSide.asBoolean();
+                boolean rhsValue = rightHandSide.asBoolean();
 
+                if(ctx.multiplicativeOperator().AND() != null) {
+                    boolean result = lhsValue && rhsValue;
+
+                    pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
+                }
+                else {
+                    String errMsg = "Term node error, missing operator AND: ";
+                    throw new PASCALetException(ctx, errMsg);
+                }
             }
 
         }
@@ -509,16 +537,19 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     public PASCALetObject visitFactor (PASCALetGrammarParser.FactorContext ctx) {
         PASCALetObject pObject = null;
 
+        //todo forgot to implement NOT.
         //it is a variable
         if(ctx.variable() != null) {
             String variableName = ctx.variable().getText();
             pObject = scope.getVariableValue(variableName, ctx);
 
+            //TODO need to change this, null error must show when doing evaluation, but assignment is okay.
             //if nothing is inside, lets throw an error.
+            /* COmmented out for now.
             if(pObject.getValue() == null) {
                 String errorMsg = "Invalid evaluation. Variable \"" + variableName  + "\" has a null value: ";
                 throw new PASCALetException(ctx, errorMsg);
-            }
+            }*/
         }
 
         //its another expression
@@ -531,7 +562,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
         }
 
-        //a constant value.
+        //a constant value. //TODO still missing char constant.....
         else if(ctx.unsignedConstant() != null) {
 
             //it is a string.
@@ -585,11 +616,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     }
 
     @Override
-    public  PASCALetObject visitUnsignedConstant (PASCALetGrammarParser.UnsignedConstantContext ctx) {
-        return super.visitUnsignedConstant(ctx);
-    }
-
-    @Override
     public PASCALetObject visitFunctionDesignator (PASCALetGrammarParser.FunctionDesignatorContext ctx) {
         return super.visitFunctionDesignator(ctx);
     }
@@ -609,8 +635,18 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         return super.visitProcedureStatement(ctx);
     }
 
-    @Override
-    public PASCALetObject visitEmptyStatement (PASCALetGrammarParser.EmptyStatementContext ctx) {
-        return PASCALetObject.VOID;
+    //throw an error if you performed evaluation with a null.
+    private void checkIfVariableHasValidValue(Object value, ParserRuleContext ctx) {
+
+        if(value == null) {
+            String errorMsg = "Invalid evaluation. Variable/s is/are null, aborting operation: ";
+            throw new PASCALetException(ctx, errorMsg);
+        }
+    }
+
+    private void divisionByZeroError(ParserRuleContext ctx) {
+        String errorMsg = "Invalid operation. Division by zero: ";
+        throw new PASCALetException(ctx, errorMsg);
+
     }
 }
