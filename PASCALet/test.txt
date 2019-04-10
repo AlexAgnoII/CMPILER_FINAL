@@ -1,10 +1,12 @@
 program alex;
 
-Var dec : integer; w,a,z : InTeGer;
-Var s : string;
 Const x = -1;
 Const y = +3;
 const a = 'a';
+
+Var dec : integer; w,c,z : InTeGer;
+Var s : string;
+
 
 
 begin

@@ -42,9 +42,10 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
         String constantName = ctx.identifier().getText();
         PASCALetObject pObject = this.visit(ctx.constant());
-        System.out.println(constantName);
         pObject.setConstant(true);
         scope.addConstant(constantName, pObject);
+
+        System.out.println(scope.ConstantToString());
 
         return PASCALetObject.VOID;
     }
@@ -67,6 +68,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
         else if(ctx.string() != null) {
             String value = ctx.string().getText();
+            value = value.replace("'", ""); //to make it a character.
 
             //char
             if(value.length() == 1) {
@@ -119,7 +121,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             }
         }
 
-        //System.out.println(scope.VariablesToString());
+        System.out.println(scope.VariablesToString());
 
         return PASCALetObject.VOID;
     }

@@ -122,6 +122,24 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
         return this.type;
     }
 
+    public String getTypeAsString() {
+
+        if(this.isTypeString()) {
+            return "string";
+        }
+        else if(this.isTypeChar()) {
+            return "char";
+        }
+        else if(this.isTypeInteger()) {
+            return "integer";
+        }
+        else if(this.isTypeBoolean()) {
+            return "boolean";
+        }
+
+        return "ERROR TYPE NOT FOUND";
+    }
+
 
     @Override
     public int compareTo(PASCALetObject o) {

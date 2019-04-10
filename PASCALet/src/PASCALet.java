@@ -35,8 +35,8 @@ public class PASCALet {
         PASCALetScope pScope = new PASCALetScope(null);
         PASCALetVisitor pVisitor = new PASCALetVisitor(pScope, functions, procedures);
 
-        System.out.println("Procedure size: " + functions.size());
-        System.out.println("Function size: " + procedures.size());
+//        System.out.println("Procedure size: " + functions.size());
+//        System.out.println("Function size: " + procedures.size());
 
         //START PASCALET
         pVisitor.visit(tree);

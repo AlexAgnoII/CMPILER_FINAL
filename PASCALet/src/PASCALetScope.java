@@ -147,7 +147,7 @@ public class PASCALetScope {
     public String VariablesToString() {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry<String, PASCALetObject> var: variables.entrySet()) {
-            sb.append(var.getKey()).append("->").append(var.getValue().getType()).append(",");
+            sb.append(var.getKey()).append("->").append(var.getValue().getValue()).append("(" + var.getValue().getTypeAsString() +")").append(",");
         }
         return sb.toString();
     }
@@ -155,7 +155,7 @@ public class PASCALetScope {
     public String ConstantToString() {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry<String, PASCALetObject> con: constants.entrySet()) {
-            sb.append(con.getKey()).append("->").append(con.getValue().getType()).append(",");
+            sb.append(con.getKey()).append("->").append(con.getValue().getValue()).append("(" + con.getValue().getTypeAsString() +")").append(",");
         }
         return sb.toString();
     }
