@@ -560,7 +560,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                 int initialValue = pObjectInitialVal.asInteger();
                 int finalValue = pObjectFinalVal.asInteger();
 
-                //TODO need to check if the loop variable is being used as assignment.
                 for(int i = initialValue; i <= finalValue; i++) {
                     //perform the statements.
                     this.visit(ctx.statement());
@@ -937,8 +936,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         else if (ctx.functionDesignator() != null){
             pObject = this.visit(ctx.functionDesignator());
         }
-
-        //a constant value. //TODO still missing char constant.....
+        
         else if(ctx.unsignedConstant() != null) {
 
             //it is a string.
