@@ -54,6 +54,24 @@ public class PASCALetScope {
         }
     }
 
+    public void addVariableArray(String variableName, String type, int maxValue, ParserRuleContext ctx) {
+        variableName = variableName.toLowerCase();
+
+
+        //Variable never used, therefore insert it in our variable name.
+        if(!variables.containsKey(variableName) && !constants.containsKey(variableName)) {
+            Object pascaletType = ConvertStringToObjectType.start(type);
+            int[] arr = new int[maxValue];
+            PASCALetObject value = new PASCALetObject(pascaletType, arr);
+            this.addVariableAndValue(variableName, value);
+        }
+
+        else { //exists already, throw an error!
+            String errorMsg = "Identifier \"" + variableName + "\" already in use. Cannot be a variable identifier: " ;
+            throw new PASCALetException(ctx, errorMsg);
+        }
+    }
+
     //inserts a constant name key and a value to the constants hashmap. FOR DECLARATION CANNOT BE REASSIGNED.
     public void addConstant(String constantName, PASCALetObject value, ParserRuleContext ctx) {
         constantName = constantName.toLowerCase();

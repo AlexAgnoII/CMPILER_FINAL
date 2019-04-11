@@ -8,6 +8,7 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
     public static final Object PASCALET_OBJECT_CHAR = 'a';
     public static final Object PASCALET_OBJECT_STRING = "string";
     public static final Object PASCALET_OBJECT_BOOLEAN = true;
+    public static final Object PASCALET_OBJECT_ARRAY_INT = new int[0];
 
     private Object value;
     private Object type; //only used on declaration.
@@ -36,7 +37,7 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
     }
 
     private void checkIfTypeIsInSpecification() {
-        if(!(isTypeBoolean() || isTypeString() || isTypeInteger() || isTypeChar())) {
+        if(!(isTypeBoolean() || isTypeString() || isTypeInteger() || isTypeChar() || isTypeArrayInt())) {
             throw new RuntimeException("Invalid data type: " + this.type + " (" + this.type.getClass() + ")");
         }
     }
@@ -70,8 +71,8 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
         return String.valueOf(value);
     }
 
-    public Object[] asArray() {
-        return (Object[]) value;
+    public int[] asArray() {
+        return (int[]) value;
     }
 
 
@@ -92,29 +93,15 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
         return this.type instanceof String;
     }
 
+    public boolean isTypeArrayInt() { return this.type instanceof int[];}
+
+
     public boolean isNull() {
         return this == NULL;
     }
 
     public boolean isVoid() {
         return this == VOID;
-    }
-
-
-    public boolean isValBoolean(Object valueToBeAsigned) {
-        return valueToBeAsigned instanceof Boolean;
-    }
-
-    public boolean isValInteger(Object valueToBeAsigned) {
-        return valueToBeAsigned instanceof Integer;
-    }
-
-    public boolean isValChar(Object valueToBeAsigned) {
-        return valueToBeAsigned instanceof Character;
-    }
-
-    public boolean isValString(Object valueToBeAsigned) {
-        return valueToBeAsigned instanceof  String;
     }
 
 
@@ -135,6 +122,9 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
         }
         else if(this.isTypeBoolean()) {
             return "boolean";
+        }
+        else if(this.isTypeArrayInt()) {
+            return "array";
         }
 
         return "ERROR TYPE NOT FOUND";
@@ -161,6 +151,10 @@ public class PASCALetObject implements Comparable<PASCALetObject>{
 
         else if (this.isTypeString()) {
             return other.isTypeString();
+        }
+
+        else if(this.isTypeArrayInt()) {
+            return other.isTypeArrayInt();
         }
 
         else return false;

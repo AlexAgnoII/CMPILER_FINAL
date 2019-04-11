@@ -91,7 +91,35 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             List<PASCALetGrammarParser.IdentifierContext> identifierList = varDeclarationList.get(x).identifierList().identifier();
             int identifierSize = identifierList.size();
             for(int i = 0; i < identifierSize; i++) {
-                scope.addVariable(identifierList.get(i).getText(), varDeclarationList.get(x).type().getText(), ctx);
+
+                //normal variable
+                if(varDeclarationList.get(x).type().typeIdentifier() != null)
+                    scope.addVariable(identifierList.get(i).getText(), varDeclarationList.get(x).type().getText(), ctx);
+
+                //ARRAY TYPE.
+                else if (varDeclarationList.get(x).type().arrayType() != null) {
+                    PASCALetObject min = this.visit(varDeclarationList.get(x).type().arrayType().expression(0));
+                    PASCALetObject max = this.visit(varDeclarationList.get(x).type().arrayType().expression(1));
+
+                    if(min.isTypeInteger() && max.isTypeInteger()) {
+                        int minValue = min.asInteger();
+                        int maxValue = max.asInteger();
+
+                        if(minValue == 1 && maxValue >= 1){
+                            scope.addVariableArray(identifierList.get(i).getText(), "array", maxValue , ctx);
+                        }
+                        else {
+                            String errMsg = "Array indexes must start at 1 to n, where n is > 1";
+                            throw new PASCALetException(ctx, errMsg);
+                        }
+
+                    }
+                    else {
+                        String errMsg = "Array indexes can only be of type integer: ";
+                        throw new PASCALetException(ctx, errMsg);
+                    }
+
+                }
             }
         }
 
@@ -205,14 +233,66 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             }
             //normal assignment.
             else {
-                scope.assignVariable(identifierName, pObject, ctx);
+                this.assignNormally(pObject, identifierName, ctx);
             }
 
         }
 
         else {//if not a function scope, do a simple assignment variable.
-            scope.assignVariable(identifierName, pObject, ctx);
+            this.assignNormally(pObject, identifierName, ctx);
         }
+    }
+
+    private void assignNormally(PASCALetObject pObject, String identifierName , PASCALetGrammarParser.AssignmentStatementContext ctx) {
+        //array
+        if(ctx.variable().RBRACKET().size() != 0&& ctx.variable().LBRACKET().size() != 0) {
+            if(pObject.isTypeInteger()) {
+                identifierName = ctx.variable().getChild(0).getText();
+                PASCALetObject pOArray = scope.getVariableValue(identifierName, ctx);
+
+                if(pOArray.isTypeArrayInt()) {
+                    if(ctx.variable().expression().size() == 1) {
+                        PASCALetObject index = this.visit(ctx.variable().expression(0));
+
+                        if(index.isTypeInteger()) {
+                            int[] arr = pOArray.asArray();
+                            int indexValue = index.asInteger(); //always -1
+                            int number = pObject.asInteger();
+
+                            if((indexValue-1) >= 0 && (indexValue-1) < arr.length) {
+                                arr[indexValue-1] = number;
+                                PASCALetObject newArr = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_ARRAY_INT, arr);
+                                scope.assignVariable(identifierName, newArr, ctx);
+
+                            }
+                            else {
+                                String errMsg = "Invalid evaluation. Array index out of bounds: ";
+                                throw new PASCALetException(ctx, errMsg);
+                            }
+
+
+                        }
+
+                        else {
+                            String errMsg = "Array index must only be of type integer: ";
+                            throw new PASCALetException(ctx, errMsg);
+                        }
+                    }
+                }
+                else {
+                    String errMsg = "Invalid evaluation. Arrays are only allowed with this operation: ";
+                    throw new PASCALetException(ctx, errMsg);
+                }
+            }
+
+            else {
+                String errMsg = "Values inserted to the array must only be of type integer: ";
+                throw new PASCALetException(ctx, errMsg);
+            }
+        }
+        //normal value
+        else
+            scope.assignVariable(identifierName, pObject, ctx);
     }
 
     @Override
@@ -514,7 +594,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         }
 
         else if(ctx.relationaloperator().NOTEQUALS() != null) {
-            return !lhValue.equalsIgnoreCase(rhValue);
+            return !lhValue.equals(rhValue);
         }
 
         else if(ctx.relationaloperator().GREATERTHANOREQUALS() != null) {
@@ -834,8 +914,48 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
         String identifierName = ctx.getText();
 
-        if(ctx.LBRACKET() != null && ctx.RBRACKET() != null) {
+        //ARRAY
+        if(ctx.LBRACKET().size() != 0 && ctx.RBRACKET().size() != 0) {
 
+            if(ctx.expression().size() == 1) {
+                PASCALetObject index = this.visit(ctx.expression(0));
+
+                if(index.isTypeInteger()) {
+                    int indexValue = index.asInteger();
+                    identifierName = ctx.getChild(0).getText();
+
+                    PASCALetObject pArray = scope.getVariableValue(identifierName, ctx);
+
+                    if(pArray.isTypeArrayInt()) {
+                        int arr[] = pArray.asArray();
+
+                        if((indexValue-1) >= 0 && (indexValue-1) < arr.length) {
+                            int value = arr[indexValue-1];
+                            return new PASCALetObject(PASCALetObject.PASCALET_OBJECT_INT, value);
+                        }
+                        else {
+                            String errMsg = "Invalid evaluation. Array index out of bounds:  ";
+                            throw new PASCALetException(ctx, errMsg);
+                        }
+                    }
+                    else {
+                        String errMsg = "Invalid evaluation. Arrays are only allowed with this operation: ";
+                        throw new PASCALetException(ctx, errMsg);
+                    }
+                }
+                else {
+                    String msgErr = "Invalid evaluation. Index must only be of type integer: ";
+                    throw new PASCALetException(ctx, msgErr);
+                }
+            }
+            else {
+                String msgERR = "SOmething wen wrong with visitng a variable : ";
+                throw new PASCALetException(ctx, msgERR);
+            }
+        }
+
+        //normal value.
+        else {
             if(scope.isThisAVariable(identifierName)) {
                 return scope.getVariableValue(identifierName, ctx);
             }
@@ -843,11 +963,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             else if (scope.isThisAConstant(identifierName)) {
                 return scope.getConstantValue(identifierName, ctx);
             }
-        }
-
-        //ITS AN ARRAY WOW.
-        else {
-
         }
 
 

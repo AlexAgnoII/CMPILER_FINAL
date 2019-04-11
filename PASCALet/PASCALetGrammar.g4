@@ -66,7 +66,7 @@ typeIdentifier
    ;
 
 arrayType
-   : ARRAY LBRACKET expression PERIODPERIOD expression RBRACKET OF typeIdentifier
+   : ARRAY LBRACKET expression PERIODPERIOD expression RBRACKET OF INTEGER
    ;
 
 subroutineDeclarationPart

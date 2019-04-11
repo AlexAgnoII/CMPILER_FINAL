@@ -1085,9 +1085,7 @@ public class PASCALetGrammarParser extends Parser {
 		public TerminalNode PERIODPERIOD() { return getToken(PASCALetGrammarParser.PERIODPERIOD, 0); }
 		public TerminalNode RBRACKET() { return getToken(PASCALetGrammarParser.RBRACKET, 0); }
 		public TerminalNode OF() { return getToken(PASCALetGrammarParser.OF, 0); }
-		public TypeIdentifierContext typeIdentifier() {
-			return getRuleContext(TypeIdentifierContext.class,0);
-		}
+		public TerminalNode INTEGER() { return getToken(PASCALetGrammarParser.INTEGER, 0); }
 		public ArrayTypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1128,7 +1126,7 @@ public class PASCALetGrammarParser extends Parser {
 			setState(188);
 			match(OF);
 			setState(189);
-			typeIdentifier();
+			match(INTEGER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -3471,7 +3469,7 @@ public class PASCALetGrammarParser extends Parser {
 		"\u00b4\u00b3\3\2\2\2\u00b5\37\3\2\2\2\u00b6\u00b7\t\4\2\2\u00b7!\3\2\2"+
 		"\2\u00b8\u00b9\7\26\2\2\u00b9\u00ba\7\36\2\2\u00ba\u00bb\5P)\2\u00bb\u00bc"+
 		"\7\65\2\2\u00bc\u00bd\5P)\2\u00bd\u00be\7\37\2\2\u00be\u00bf\7\27\2\2"+
-		"\u00bf\u00c0\5 \21\2\u00c0#\3\2\2\2\u00c1\u00c2\5&\24\2\u00c2\u00c3\7"+
+		"\u00bf\u00c0\7\24\2\2\u00c0#\3\2\2\2\u00c1\u00c2\5&\24\2\u00c2\u00c3\7"+
 		".\2\2\u00c3%\3\2\2\2\u00c4\u00c7\5(\25\2\u00c5\u00c7\5*\26\2\u00c6\u00c4"+
 		"\3\2\2\2\u00c6\u00c5\3\2\2\2\u00c7\'\3\2\2\2\u00c8\u00c9\7\t\2\2\u00c9"+
 		"\u00cb\5\6\4\2\u00ca\u00cc\5,\27\2\u00cb\u00ca\3\2\2\2\u00cb\u00cc\3\2"+
