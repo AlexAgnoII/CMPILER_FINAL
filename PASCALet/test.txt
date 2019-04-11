@@ -1,5 +1,13 @@
 program alex;
 
+var x : integer;
+
 begin
-    readln();
+    x:= 5;
+    if not (1 <> 1) then
+        begin
+            x:=1;
+        end;
+
+    writeln(x);
 end.

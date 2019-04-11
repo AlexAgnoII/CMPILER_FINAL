@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> {
     private BufferedReader bufferedReader;
@@ -188,7 +189,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
             }
 
-            //TODO: Implement reserveStatements operators.
             else if (ctx.reservedStatements() != null) {
                this.visit(ctx.reservedStatements());
             }
@@ -299,35 +299,73 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitReadStatement (PASCALetGrammarParser.ReadStatementContext ctx) {
+        boolean isEmpty = false;
+
+        //TODO finish readln later.
+        try {
+            String temp;
+            temp = ctx.variable().getText();
+        }catch(Exception e) {
+            isEmpty = true;
+        }
+
+        //Scan, but do nothing.
+        if(isEmpty) {
+            Scanner sc = new Scanner(System.in);
+            sc.nextLine();
+        }
+
+        //scan and return an object.
+        else {
+            Scanner sc = new Scanner(System.in);
+        }
 
 
-        return super.visitReadStatement(ctx);
+        return PASCALetObject.VOID;
+    }
+
+    @Override //TODO if if or for wouldnt work, remove this.
+    public PASCALetObject visitStructuredStatement (PASCALetGrammarParser.StructuredStatementContext ctx) {
+        return super.visitStructuredStatement(ctx);
     }
 
     @Override
-    public PASCALetObject visitStructuredStatement (PASCALetGrammarParser.StructuredStatementContext ctx) {
+    public PASCALetObject visitIfStatement (PASCALetGrammarParser.IfStatementContext ctx) {
 
+        //statement 0 = statement of IF
+        //statement 1 = statement of ELSE
+        if(ctx.IF() != null) {
+            System.out.println("IF STATEMENT");
+            PASCALetObject pObject = this.visit(ctx.expression());
 
-        if(ctx.ifStatement() != null) {
-            System.out.println("IF");
+            //if statement starts here.
+            if(pObject.isTypeBoolean()) {
 
-        }
+                boolean exp = pObject.asBoolean();
 
-        else if (ctx.forStatement() != null) {
-            System.out.println("FOR");
+                if(exp) {
+                    this.visit(ctx.statement(0));
+                }
 
+                //if else exists and the expression is false, do this.
+                else if (ctx.ELSE() != null) {
+                    this.visit(ctx.statement(1));
+                }
+            }
+
+            //not boolean, so throw an error.
+            else {
+                String errMsg = "Invalid operation. Cannot have \"" + pObject.getTypeAsString() + "\" as type in the expression in conditional statements: ";
+                throw new PASCALetException(ctx, errMsg);
+            }
         }
 
         return PASCALetObject.VOID;
     }
 
     @Override
-    public PASCALetObject visitIfStatement (PASCALetGrammarParser.IfStatementContext ctx) {
-        return super.visitIfStatement(ctx);
-    }
-
-    @Override
     public PASCALetObject visitForStatement (PASCALetGrammarParser.ForStatementContext ctx) {
+        System.out.println("FOR STATEMENT");
         return super.visitForStatement(ctx);
     }
 
