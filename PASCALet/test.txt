@@ -1,10 +1,17 @@
 program alex;
+Var x , invoker: integer;
 
-var x : integer;
+procedure proc();
+Var x : integer;
+begin
+   X:= 10;
+   writeln('In procedure: ', X);
+   x:= x * 6;
+   writeln('In procedure after operation: ', x)
+end;
 
 begin
-    x:=5;
-
-    for x:= 1 to 5 do
-       writeln('xd')
+    X:= 5;
+    proc();
+    writeln('In main: ', x);
 end.

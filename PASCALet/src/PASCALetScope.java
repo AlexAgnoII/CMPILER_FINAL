@@ -111,6 +111,19 @@ public class PASCALetScope {
         else return false;
     }
 
+    public boolean isThisAVariable(String variableName) {
+
+        if(this.variables.containsKey(variableName)) {
+            return true;
+        }
+
+        else if (!this.isGlobalScope()) { //check global scope if its there.
+            return this.parent.isThisAVariable(variableName);
+        }
+
+        else return false;
+    }
+
     //give value of the constant
     public PASCALetObject getConstantValue(String constantName, ParserRuleContext ctx) {
         constantName = constantName.toLowerCase();

@@ -48,8 +48,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         pObject.setConstant(true);
         scope.addConstant(constantName, pObject, ctx);
 
-        System.out.println(scope.ConstantToString());
-
         return PASCALetObject.VOID;
     }
 
@@ -96,8 +94,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                 scope.addVariable(identifierList.get(i).getText(), varDeclarationList.get(x).type().getText(), ctx);
             }
         }
-
-        System.out.println(scope.VariablesToString());
 
         return PASCALetObject.VOID;
     }
@@ -201,11 +197,12 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     private void performAssignment(PASCALetGrammarParser.AssignmentStatementContext ctx) {
 
         String identifierName = ctx.variable().getText();
+
         PASCALetObject pObject = this.visit(ctx.expression());
         scope.assignVariable(identifierName, pObject, ctx);
 
         //for testing only.
-        System.out.println(scope.VariablesToString());
+        //System.out.println(scope.VariablesToString());
     }
 
     @Override
@@ -335,7 +332,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         //statement 0 = statement of IF
         //statement 1 = statement of ELSE
         if(ctx.IF() != null) {
-            System.out.println("IF STATEMENT");
             PASCALetObject pObject = this.visit(ctx.expression());
 
             //if statement starts here.
@@ -376,8 +372,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
             if(pObjectInitialVal.isTypeInteger()) {
                 scope.assignVariable(variableIndexName, pObjectInitialVal, ctx); //initializing the variable.
-
-                System.out.println(scope.VariablesToString());
 
                 int initialValue = pObjectInitialVal.asInteger();
                 int finalValue = pObjectFinalVal.asInteger();
@@ -453,9 +447,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                 String errorMsg = "Type mismatch / invalid type for evaluation: ";
                 throw new PASCALetException(ctx, errorMsg);
             }
-
-            //System.out.println(result);
-
             //pObject in the end becomes a boolean value.
             pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
         }
@@ -846,7 +837,78 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitProcedureStatement (PASCALetGrammarParser.ProcedureStatementContext ctx) {
-        return super.visitProcedureStatement(ctx);
+        int paramSize = 0;
+        List<PASCALetGrammarParser.ActualParameterContext> actualParams = null;
+
+        if(ctx.parameterList() != null) {
+            paramSize = ctx.parameterList().actualParameter().size();
+            actualParams = ctx.parameterList().actualParameter();
+        }
+
+        String procedureIdentifier = ctx.identifier().getText();
+        String procecureCallname = procedureIdentifier + paramSize;
+        procecureCallname = procecureCallname.toLowerCase(); //CASE INSENSITIVE
+
+        if(this.checkProcedureName(procedureIdentifier, paramSize, ctx )) {}
+
+        //perform procedure call.
+        else if(procedures.containsKey(procecureCallname)) {
+            this.procedures.get(procecureCallname).invoke(actualParams, functions, procedures, scope, ctx);
+        }
+
+        //no such thing as this procedure.
+        else {
+            String msgErr = "Invalid evaluation. Procedure call \"" + ctx.identifier().getText()  + "\" does not exist / was never declared: ";
+            throw new PASCALetException(ctx, msgErr);
+        }
+
+        return PASCALetObject.VOID;
+    }
+
+    private boolean checkProcedureName(String procedureIdentifier, int paramSize, ParserRuleContext ctx) {
+        procedureIdentifier = procedureIdentifier.toLowerCase();
+
+        //check in variables
+        if(scope.isThisAVariable(procedureIdentifier)) {
+            String errMsg = "Invalid evaluation. Identifier \"" + procedureIdentifier + "\" is a variable, not a procedure: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+        //check in constants
+        else if(scope.isThisAConstant(procedureIdentifier)) { //if exist, throw.
+            String errMsg = "Invalid evaluation. Identifier \"" + procedureIdentifier + "\" is a constant, not a procedure: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+
+        //check in functions
+        else if (functions.containsKey(procedureIdentifier + paramSize)) {
+            String errMsg = "Invalid evaluation. Identifier \"" + procedureIdentifier + "\" already in use as a function identifier: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+
+        return false;
+    }
+
+    private boolean checkFuncionName(String functionIdentifier, int paramSize, ParserRuleContext ctx) {
+        functionIdentifier = functionIdentifier.toLowerCase();
+
+        //check in variables
+        if(scope.isThisAVariable(functionIdentifier)) {
+            String errMsg = "Invalid evaluation. Identifier \"" + functionIdentifier + "\" is a variable, not a function: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+        //check in constants
+        else if(scope.isThisAConstant(functionIdentifier)) { //if exist, throw.
+            String errMsg = "Invalid evaluation. Identifier \"" + functionIdentifier + "\" is a constant, not a function: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+
+        //check in functions
+        else if (procedures.containsKey(functionIdentifier + paramSize)) {
+            String errMsg = "Invalid evaluation. Identifier \"" + functionIdentifier + "\" already in use as a procedure identifier: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+
+        return false;
     }
 
     //throw an error if you performed evaluation with a null.

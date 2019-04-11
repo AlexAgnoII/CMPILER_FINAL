@@ -28,9 +28,6 @@ public class PASCALet {
         PASCALetProcedureVisitor procedureVisitor = new PASCALetProcedureVisitor(procedures);
         procedureVisitor.visit(tree);
 
-        //test
-        //ShowAllSubroutines(functions, procedure);
-
         //Evaluation visitor here:
         PASCALetScope pScope = new PASCALetScope(null);
         PASCALetVisitor pVisitor = new PASCALetVisitor(pScope, functions, procedures);

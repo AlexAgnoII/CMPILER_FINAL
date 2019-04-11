@@ -35,6 +35,7 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
         }
 
         String procedureName = ctx.identifier().getText() + paramCount;
+        procedureName = procedureName.toLowerCase(); //CASE INSENSITIVE
         ParseTree block = ctx.block();
 
         //testing purposes
@@ -46,6 +47,7 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
        }*/
         //System.out.println("Procedure Parameter size: " + paramCount);
 
+        System.out.println(procedureName);
         procedures.put(procedureName, new PASCALetProcedure(procParams, paramCount, block));
 
         return PASCALetObject.VOID;
