@@ -1,7 +1,5 @@
 program alex;
 
-var x : boolean;
-
 begin
-    x:= not (1 > 5) and (6 and false)
+    readln();
 end.

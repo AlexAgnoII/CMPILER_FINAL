@@ -184,14 +184,13 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
             //TODO: Implement procedure calls
             else if (ctx.procedureStatement() != null) {
-                this.performProceedureCall(ctx.procedureStatement());
+                this.visit(ctx.procedureStatement());
 
             }
 
             //TODO: Implement reserveStatements operators.
             else if (ctx.reservedStatements() != null) {
-               this.performRservedStatement(ctx.reservedStatements());
-
+               this.visit(ctx.reservedStatements());
             }
         }
 
@@ -209,14 +208,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         System.out.println(scope.VariablesToString());
     }
 
-    private void performProceedureCall(PASCALetGrammarParser.ProcedureStatementContext procedureStatementContext) {
-
-    }
-
-    private void performRservedStatement(PASCALetGrammarParser.ReservedStatementsContext reservedStatementsContext) {
-
-    }
-
     @Override
     public PASCALetObject visitReservedStatements (PASCALetGrammarParser.ReservedStatementsContext ctx) {
         return super.visitReservedStatements(ctx);
@@ -224,17 +215,108 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitWriteStatement (PASCALetGrammarParser.WriteStatementContext ctx) {
-        return super.visitWriteStatement(ctx);
+
+        //PASCALetObject pObject = this.visit();
+        if(ctx.expression().size() == 1) {
+            PASCALetObject pObject = this.visit(ctx.expression(0));
+
+            Object valPrint = this.checkNullValueToPrint(pObject, ctx);
+
+            if(ctx.WRITE() != null) {
+                System.out.print(valPrint);
+            }
+
+            else if(ctx.WRITELN() != null) {
+                System.out.println(valPrint);
+            }
+
+        }
+
+        else if (ctx.expression().size() == 2) {
+            PASCALetObject p1 = this.visit(ctx.expression(0));
+            PASCALetObject p2 = this.visit(ctx.expression(1));
+
+            Object valPrint1 = this.checkNullValueToPrint(p1, ctx);
+            Object valPrint2 = this.checkNullValueToPrint(p2, ctx);
+
+            if(ctx.WRITE() != null) {
+                System.out.print(valPrint1 + "" + valPrint2);
+            }
+
+            else if(ctx.WRITELN() != null) {
+                System.out.println(valPrint1 + "" + valPrint2);
+            }
+        }
+
+        else {
+            if(ctx.WRITE() != null) {
+                System.out.print("");
+            }
+
+            else if(ctx.WRITELN() != null) {
+                System.out.println("");
+            }
+        }
+
+        return PASCALetObject.VOID;
+    }
+
+    private Object checkNullValueToPrint(PASCALetObject pObject, ParserRuleContext ctx) {
+
+        if(pObject.isTypeInteger()) {
+            if(pObject.getValue() != null) {
+                return pObject.getValue();
+            }
+            else {
+                return 0;
+            }
+
+        }
+
+        else if (pObject.isTypeBoolean()) {
+            if(pObject.getValue() != null) {
+                return pObject.getValue();
+            }
+            else {
+                return false;
+            }
+        }
+
+        else if (pObject.isTypeString() || pObject.isTypeChar()) {
+            if(pObject.getValue() != null) {
+                return pObject.getValue();
+            }
+            else {
+                return "";
+            }
+        }
+
+        else {
+            String errMsg = "Error checking print value type, did not find any of type.";
+            throw new PASCALetException(ctx, errMsg);
+        }
     }
 
     @Override
     public PASCALetObject visitReadStatement (PASCALetGrammarParser.ReadStatementContext ctx) {
+
+
         return super.visitReadStatement(ctx);
     }
 
     @Override
     public PASCALetObject visitStructuredStatement (PASCALetGrammarParser.StructuredStatementContext ctx) {
-        System.out.println("STRUCTURED HERE");
+
+
+        if(ctx.ifStatement() != null) {
+            System.out.println("IF");
+
+        }
+
+        else if (ctx.forStatement() != null) {
+            System.out.println("FOR");
+
+        }
 
         return PASCALetObject.VOID;
     }
@@ -607,6 +689,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             //it is a string.
             if(ctx.unsignedConstant().string() != null) {
                 String word = ctx.unsignedConstant().string().getText();
+                word = word.replace("'", "");
                 pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_STRING, word);
             }
 
