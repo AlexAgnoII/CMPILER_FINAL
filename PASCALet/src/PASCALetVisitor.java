@@ -407,8 +407,60 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             Scanner sc = new Scanner(System.in);
             String varName = ctx.variable().getText();
 
+            //array
+            if(ctx.variable().LBRACKET().size() != 0 && ctx.variable().RBRACKET().size() != 0) {
 
 
+
+            }
+            //not array;
+            else {
+                PASCALetObject tempO = scope.getVariableValue(varName, ctx);
+
+                if(tempO.isTypeInteger()) {
+                    try {
+                        int value = sc.nextInt();
+                        PASCALetObject newObj = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_INT, value);
+                        scope.assignVariable(varName, newObj, ctx);
+                    }
+                    catch(Exception e) {
+                        String errMsg = "Invalid evaluation. Enetered input must be of type integer: ";
+                        throw new PASCALetException(ctx, errMsg);
+                    }
+                }
+
+                else if (tempO.isTypeBoolean()){
+                    try {
+                        boolean value = sc.nextBoolean();
+                        PASCALetObject newObj = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, value);
+                        scope.assignVariable(varName, newObj, ctx);
+                    }
+                    catch(Exception e) {
+                        String errMsg = "Invalid evaluation. Enetered input must be of type boolean: ";
+                        throw new PASCALetException(ctx, errMsg);
+                    }
+
+                }
+
+                else if (tempO.isTypeString()) {
+                    String value = sc.nextLine();
+                    PASCALetObject newObj = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_STRING, value);
+                    scope.assignVariable(varName, newObj, ctx);
+                }
+
+                else if (tempO.isTypeChar()) {
+                    String value = sc.nextLine();
+                    char val = value.charAt(0);
+                    PASCALetObject newObj = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_CHAR, value);
+                    scope.assignVariable(varName, newObj, ctx);
+                }
+
+                else {
+                    String errMsg = "Type variable is invalid: ";
+                    throw new PASCALetException(ctx, errMsg);
+                }
+
+            }
 
         }
         return PASCALetObject.VOID;

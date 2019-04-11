@@ -1,17 +1,13 @@
 program alex;
 
 var x : array[1..10] of integer;
+VAR a : char;
+var b : string;
+var c : boolean;
 var y : integer;
 
 begin
-   x[1] := 1;
+   readln(y);
 
-   for y:= 1 to 10 do
-      x[y] := y*5;
-
-   for y:= 1 to 10 do
-      writeln(x[y]);
-
-   writeln(x[5])
-
+   write(y);
 end.
