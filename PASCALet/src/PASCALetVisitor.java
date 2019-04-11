@@ -359,14 +359,54 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                 throw new PASCALetException(ctx, errMsg);
             }
         }
+        else {
+            String errMsg = "Ifstatement node error, if was not found: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
 
         return PASCALetObject.VOID;
     }
 
-    @Override
     public PASCALetObject visitForStatement (PASCALetGrammarParser.ForStatementContext ctx) {
-        System.out.println("FOR STATEMENT");
-        return super.visitForStatement(ctx);
+
+        if(ctx.FOR() != null) {
+            String variableIndexName = ctx.identifier().getText(); //must not be used again inside loop.
+            PASCALetObject pObjectInitialVal = this.visit(ctx.forList().initialValue());
+            PASCALetObject pObjectFinalVal = this.visit(ctx.forList().finalValue());
+
+            if(pObjectInitialVal.isTypeInteger()) {
+                scope.assignVariable(variableIndexName, pObjectInitialVal, ctx); //initializing the variable.
+
+                System.out.println(scope.VariablesToString());
+
+                int initialValue = pObjectInitialVal.asInteger();
+                int finalValue = pObjectFinalVal.asInteger();
+
+                //TODO need to check if the loop variable is being used as assignment.
+                for(int i = initialValue; i <= finalValue; i++) {
+                    //perform the statements.
+                    this.visit(ctx.statement());
+
+                    //increment variable index.
+                    PASCALetObject pOb = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_INT, i+1);
+                    scope.assignVariable(variableIndexName, pOb, ctx);
+                }
+            }
+
+            //one of them is not integer, throw error.
+            else {
+                String errMsg = "Invalid evaluation. Initial and final value must be of type integer: ";
+                throw new PASCALetException(ctx, errMsg);
+
+            }
+        }
+
+        else {
+            String errMsg = "Forstatement node error, for was not found: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+
+        return PASCALetObject.VOID;
     }
 
     @Override
@@ -821,6 +861,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     private void divisionByZeroError(ParserRuleContext ctx) {
         String errorMsg = "Invalid operation. Division by zero: ";
         throw new PASCALetException(ctx, errorMsg);
-
     }
+
 }

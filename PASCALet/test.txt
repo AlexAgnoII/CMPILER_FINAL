@@ -3,11 +3,8 @@ program alex;
 var x : integer;
 
 begin
-    x:= 5;
-    if not (1 <> 1) then
-        begin
-            x:=1;
-        end;
+    x:=5;
 
-    writeln(x);
+    for x:= 1 to 5 do
+       writeln('xd')
 end.
