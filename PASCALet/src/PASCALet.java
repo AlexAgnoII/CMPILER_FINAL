@@ -13,12 +13,17 @@ public class PASCALet {
         //Lexical analysis
         CharStream cs = CharStreams.fromFileName("test.txt"); //get input
         PASCALetGrammarLexer lexer = new PASCALetGrammarLexer(cs);
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(PASCALetLexerErrorListener.INSTANCE);
 
         //token stream.
         CommonTokenStream token = new CommonTokenStream(lexer);
 
         //Semantic analysis (AST)
         PASCALetGrammarParser parser = new PASCALetGrammarParser(token);
+        parser.removeErrorListeners();
+        parser.addErrorListener(PASCALetParserErrorListener.INSTANCE);
+
         ParseTree tree = parser.program();
 
         //Gather all Functions.

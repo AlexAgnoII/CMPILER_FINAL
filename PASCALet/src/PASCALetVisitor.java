@@ -392,7 +392,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     public PASCALetObject visitReadStatement (PASCALetGrammarParser.ReadStatementContext ctx) {
         boolean isEmpty = false;
 
-        //TODO finish readln later.
         try {
             String temp;
             temp = ctx.variable().getText();
