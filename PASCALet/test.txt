@@ -1,6 +1,8 @@
 program alex;
-@
+
+var x : integer;
+
 
 begin
-ending>.
-
+  writeln('hello');
+end.
