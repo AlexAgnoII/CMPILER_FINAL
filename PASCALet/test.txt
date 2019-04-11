@@ -2,14 +2,14 @@ program alex;
 
 var x : integer;
 
-procedure test();
-Var alex : integer ;
+function test() : integer;
+Var x : integer ;
 begin
 
 end;
 
 begin
 
-   test;
+   x:= test();
 
 end.

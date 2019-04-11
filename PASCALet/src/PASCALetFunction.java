@@ -77,6 +77,11 @@ public class PASCALetFunction {
             retValue = pReturnValue.value;
         }
 
+        if(retValue == null) {
+            String errMsg = "Missing return type \"" + this.returnType +"\": ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+
         if(this.returnType.equalsIgnoreCase(retValue.getTypeAsString())) {
             return retValue;
         }
