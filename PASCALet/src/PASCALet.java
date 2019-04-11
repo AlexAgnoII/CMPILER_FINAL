@@ -14,7 +14,10 @@ public class PASCALet {
         CharStream cs = CharStreams.fromFileName("test.txt"); //get input
         PASCALetGrammarLexer lexer = new PASCALetGrammarLexer(cs);
 
+        //token stream.
         CommonTokenStream token = new CommonTokenStream(lexer);
+
+        //Semantic analysis (AST)
         PASCALetGrammarParser parser = new PASCALetGrammarParser(token);
         ParseTree tree = parser.program();
 
@@ -32,18 +35,12 @@ public class PASCALet {
         PASCALetScope pScope = new PASCALetScope(null);
         PASCALetVisitor pVisitor = new PASCALetVisitor(pScope, functions, procedures);
 
-//        System.out.println("Procedure size: " + functions.size());
-//        System.out.println("Function size: " + procedures.size());
 
         //START PASCALET
         pVisitor.visit(tree);
-
-
-
     }
 
     private static void ShowAllSubroutines(HashMap<String, PASCALetFunction> functions, HashMap<String, PASCALetProcedure> procedure) {
-
         System.out.println("Functions: ");
         for(String key : functions.keySet()) {
            System.out.print(functions.get(key) + " | ");
@@ -53,6 +50,5 @@ public class PASCALet {
         for(String key : procedure.keySet()) {
             System.out.print(procedure.get(key) + " | ");
         }
-
     }
 }

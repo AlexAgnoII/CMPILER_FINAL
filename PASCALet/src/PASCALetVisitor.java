@@ -213,9 +213,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         else {//if not a function scope, do a simple assignment variable.
             scope.assignVariable(identifierName, pObject, ctx);
         }
-
-        //for testing only.
-        //System.out.println(scope.VariablesToString());
     }
 
     @Override
@@ -428,7 +425,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitAssignmentStatement (PASCALetGrammarParser.AssignmentStatementContext ctx) {
-        System.out.println("Hello!");
         return super.visitAssignmentStatement(ctx);
     }
 

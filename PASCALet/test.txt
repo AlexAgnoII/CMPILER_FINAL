@@ -1,21 +1,36 @@
 program alex;
-Var x : integer;
+Var x , y , z: integer;
 
-function test(x : integer; y : integer; z : integer; w : integer) : integer;
+procedure test();
+Var x, y : integer;
 begin
-    for x:= 1 to 5 do
-        begin
-            writeln(x+y+z+w);
-            y:= y + 2;
-        end;
-    test:=-99;
+    y:= 1;
+    x:= 2;
+    if (1 + y >= x) then
+       begin
+           for z:= 1 to 10 do
+              writeln(z);
+       end
+     else
+        writeln('fail');
+
+     writeln(y);
+     writeln(x);
 end;
 
-
 begin
-    x:=1;
-    writeln(x);
-    x:= test(2, 5, 4, 5);
-    writeln(x);
+    x:= 100;
+    y:= 2;
 
+        if (1 + y >= x) then
+           begin
+               for z:= 1 to 10 do
+                  writeln(z);
+           end
+         else
+            writeln('fail');
+
+    test();
+    writeln(y);
+    writeln(x);
 end.
