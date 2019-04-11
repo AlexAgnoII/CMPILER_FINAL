@@ -1,13 +1,7 @@
 program alex;
 
-Var y , x: integer;
-var a, b, c : boolean;
-
-
+var x : boolean;
 
 begin
-    y:=7;
-    x:= -5;
-    a:= y < x;
-
+    x:= not (1 > 5) and (6 and false)
 end.

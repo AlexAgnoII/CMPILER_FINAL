@@ -273,8 +273,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     public PASCALetObject visitExpression (PASCALetGrammarParser.ExpressionContext ctx) {
         PASCALetObject pObject = null;
 
-
-        //TODO finish relational operators.
         if(ctx.relationaloperator() != null && ctx.expression() != null) {
             PASCALetObject leftHandSide = this.visit(ctx.simpleExpression());
             PASCALetObject rightHandSide = this.visit(ctx.expression());
@@ -296,7 +294,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                 throw new PASCALetException(ctx, errorMsg);
             }
 
-            System.out.println(result);
+            //System.out.println(result);
 
             //pObject in the end becomes a boolean value.
             pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
@@ -419,18 +417,28 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             }
 
             //This must be a relational operator, boolean values only.
-            else  { //todo should we add checker again here that only allowss boolean?
-                if(ctx.additiveOperator().OR() != null) {
-                    boolean lhsValue = leftHandSide.asBoolean();
-                    boolean rhsValue = rightHandSide.asBoolean();
-                    boolean result = lhsValue || rhsValue;
+            else  {
+                if(leftHandSide.isTypeBoolean() && rightHandSide.isTypeBoolean()) {
 
-                    pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
+                    if(ctx.additiveOperator().OR() != null) {
+                        boolean lhsValue = leftHandSide.asBoolean();
+                        boolean rhsValue = rightHandSide.asBoolean();
+                        boolean result = lhsValue || rhsValue;
+
+                        pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
+                    }
+
+                    else {
+                        String errMsg = "SimpleExpression error, missing OR operator: ";
+                        throw new PASCALetException(ctx, errMsg);
+                    }
                 }
 
+                //throw error.
                 else {
-                    String errMsg = "SimpleExpression error, missing OR operator: ";
+                    String errMsg = "Invalid evaluation on \"OR\". Both values must have type boolean: ";
                     throw new PASCALetException(ctx, errMsg);
+
                 }
             }
         }
@@ -503,24 +511,34 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                         symbol = "%";
                     }
 
-                    String errorMsg = "Invalid operation \"" + symbol  + "\" both values must have type integer: ";
+                    String errorMsg = "Invalid operation on \"" + symbol  + "\". both values must have type integer: ";
                     throw new PASCALetException(ctx, errorMsg);
                 }
             }
 
             //its boolean only.
-            else {//TODO place checker that only boolean'ss allowed?
-                boolean lhsValue = leftHandSide.asBoolean();
-                boolean rhsValue = rightHandSide.asBoolean();
+            else {
+                if(leftHandSide.isTypeBoolean() && rightHandSide.isTypeBoolean()) {
+                    boolean lhsValue = leftHandSide.asBoolean();
+                    boolean rhsValue = rightHandSide.asBoolean();
 
-                if(ctx.multiplicativeOperator().AND() != null) {
-                    boolean result = lhsValue && rhsValue;
 
-                    pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
+                    if(ctx.multiplicativeOperator().AND() != null) {
+                        boolean result = lhsValue && rhsValue;
+
+                        pObject = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_BOOLEAN, result);
+                    }
+                    else {
+                        String errMsg = "Term node error, missing operator AND: ";
+                        throw new PASCALetException(ctx, errMsg);
+                    }
                 }
+
+                //not both boolean, throw error.
                 else {
-                    String errMsg = "Term node error, missing operator AND: ";
+                    String errMsg = "Invalid operation on \"AND\". Both values must have type boolean: ";
                     throw new PASCALetException(ctx, errMsg);
+
                 }
             }
 
@@ -567,7 +585,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     public PASCALetObject visitFactor (PASCALetGrammarParser.FactorContext ctx) {
         PASCALetObject pObject = null;
 
-        //todo forgot to implement NOT.
         //it is a variable
         if(ctx.variable() != null) {
             String variableName = ctx.variable().getText();
@@ -608,6 +625,20 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         //itself
         else if (ctx.factor() != null) {
             pObject = this.visit(ctx.factor());
+
+            if(ctx.NOT() != null) {
+                if(pObject.isTypeBoolean()) {
+                    boolean val = pObject.asBoolean();
+                    val = !val;
+                    pObject.setValue(val);
+                }
+
+                //throw an error if its not a bolean.
+                else {
+                    String errMsg = "Invalid operation \"NOT\" on non-boolean type: ";
+                    throw new PASCALetException(ctx, errMsg);
+                }
+            }
         }
 
         //boolean
