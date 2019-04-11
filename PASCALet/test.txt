@@ -1,15 +1,17 @@
 program alex;
 
-var x : integer;
+var x : array[1..5] of integer;
+var y  : integer;
 
-function test() : integer;
-Var x : integer ;
-begin
-
-end;
 
 begin
+   writeln('Before : ', x[1]);
+   writeln('After : ', x[2]);
 
-   x:= test();
+   for y:= 1 to 5 do
+      readln(x[y]);
+
+   for y:= 1 to 5 do
+      writeln(x[y]);
 
 end.

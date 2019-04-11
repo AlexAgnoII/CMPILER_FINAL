@@ -414,8 +414,49 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             //array
             if(ctx.variable().LBRACKET().size() != 0 && ctx.variable().RBRACKET().size() != 0) {
 
+                if(ctx.variable().expression().size() == 1) {
+                    PASCALetObject index = this.visit(ctx.variable().expression(0));
 
+                    if(index.isTypeInteger()) {
+                        int indexValue = index.asInteger();
+                        varName = ctx.variable().getChild(0).getText();
 
+                        PASCALetObject pArray = scope.getVariableValue(varName, ctx);
+
+                        if(pArray.isTypeArrayInt()) {
+                            int arr[] = pArray.asArray();
+
+                            //here
+                            if((indexValue-1) >= 0 && (indexValue-1) < arr.length) {
+                                try {
+                                    arr[indexValue-1] = sc.nextInt();
+                                    PASCALetObject newObj = new PASCALetObject(PASCALetObject.PASCALET_OBJECT_ARRAY_INT, arr);
+                                    scope.assignVariable(varName, newObj, ctx);
+                                }
+                                catch(Exception e) {
+                                    String errMsg = "Invalid evaluation. Enetered input must be of type integer: ";
+                                    throw new PASCALetException(ctx, errMsg);
+                                }
+                            }
+                            else {
+                                String errMsg = "Invalid evaluation. Array index out of bounds:  ";
+                                throw new PASCALetException(ctx, errMsg);
+                            }
+                        }
+                        else {
+                            String errMsg = "Invalid evaluation. Arrays are only allowed with this operation: ";
+                            throw new PASCALetException(ctx, errMsg);
+                        }
+                    }
+                    else {
+                        String msgErr = "Invalid evaluation. Index must only be of type integer: ";
+                        throw new PASCALetException(ctx, msgErr);
+                    }
+                }
+                else {
+                    String msgERR = "SOmething wen wrong with visitng a variable : ";
+                    throw new PASCALetException(ctx, msgERR);
+                }
             }
             //not array;
             else {
