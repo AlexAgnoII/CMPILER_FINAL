@@ -77,7 +77,7 @@ public class PASCALetScope {
 
         //if itss a constant, fail it.
         if(isThisAConstant(variableName)) {
-            String errorMsg = "Cannot assignVariable constant \"" + variableName + "\" a value.";
+            String errorMsg = "Cannot assign Variable constant \"" + variableName + "\" a value.";
             throw new PASCALetException(ctx, errorMsg);
         }
 

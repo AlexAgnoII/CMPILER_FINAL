@@ -325,9 +325,12 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         //scan and return an object.
         else {
             Scanner sc = new Scanner(System.in);
+            String varName = ctx.variable().getText();
+
+
+
+
         }
-
-
         return PASCALetObject.VOID;
     }
 
@@ -743,8 +746,11 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
         //it is a variable
         if(ctx.variable() != null) {
+            /*
             String variableName = ctx.variable().getText();
-            pObject = scope.getVariableValue(variableName, ctx);
+            pObject = scope.getVariableValue(variableName, ctx);*/
+
+            pObject = this.visit(ctx.variable());
         }
 
         //its another expression
@@ -822,6 +828,31 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
 
         return pObject;
+    }
+
+    @Override public PASCALetObject visitVariable(PASCALetGrammarParser.VariableContext ctx) {
+
+        String identifierName = ctx.getText();
+
+        if(ctx.LBRACKET() != null && ctx.RBRACKET() != null) {
+
+            if(scope.isThisAVariable(identifierName)) {
+                return scope.getVariableValue(identifierName, ctx);
+            }
+
+            else if (scope.isThisAConstant(identifierName)) {
+                return scope.getConstantValue(identifierName, ctx);
+            }
+        }
+
+        //ITS AN ARRAY WOW.
+        else {
+
+        }
+
+
+        String errMsg = "Variable \"" + identifierName + "\" does not exist. May not have been declared: ";
+        throw new PASCALetException(ctx, errMsg);
     }
 
     @Override
