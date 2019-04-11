@@ -53,7 +53,7 @@ public class PASCALetProcedure {
                         actualParamindex++;
                     }
                     else {
-                        String errMsg = "Invalid evaluation. Parameter data type mismatch: ";
+                        String errMsg = "Invalid evaluation on procedure. Parameter data type mismatch: ";
                         throw new PASCALetException(ctx, errMsg);
                     }
                 }

@@ -179,12 +179,10 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
                 this.performAssignment(ctx.assignmentStatement());
             }
 
-            //TODO: Implement procedure calls
             else if (ctx.procedureStatement() != null) {
                 this.visit(ctx.procedureStatement());
 
             }
-
             else if (ctx.reservedStatements() != null) {
                this.visit(ctx.reservedStatements());
             }
@@ -319,11 +317,6 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
 
         return PASCALetObject.VOID;
-    }
-
-    @Override //TODO if if or for wouldnt work, remove this.
-    public PASCALetObject visitStructuredStatement (PASCALetGrammarParser.StructuredStatementContext ctx) {
-        return super.visitStructuredStatement(ctx);
     }
 
     @Override
@@ -747,9 +740,8 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
             pObject = this.visit(ctx.expression());
         }
 
-        //TODO: To implement function designator.
         else if (ctx.functionDesignator() != null){
-
+            this.visit(ctx.functionDesignator());
         }
 
         //a constant value. //TODO still missing char constant.....
@@ -822,17 +814,33 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitFunctionDesignator (PASCALetGrammarParser.FunctionDesignatorContext ctx) {
-        return super.visitFunctionDesignator(ctx);
-    }
+        int paramSize = 0;
+        List<PASCALetGrammarParser.ActualParameterContext> actualParams = null;
 
-    @Override
-    public PASCALetObject visitParameterList (PASCALetGrammarParser.ParameterListContext ctx) {
-        return super.visitParameterList(ctx);
-    }
+        if(ctx.parameterList() != null) {
+            paramSize = ctx.parameterList().actualParameter().size();
+            actualParams = ctx.parameterList().actualParameter();
+        }
 
-    @Override
-    public PASCALetObject visitActualParameter (PASCALetGrammarParser.ActualParameterContext ctx) {
-        return super.visitActualParameter(ctx);
+        String functionIdentifier = ctx.identifier().getText();
+        String functionCallName = functionIdentifier + paramSize;
+        functionCallName = functionCallName.toLowerCase(); //CASE INSENSITIVE
+
+        if(this.checkFuncionName(functionIdentifier, paramSize, ctx )) {}
+
+        //perform procedure call.
+        else if(functions.containsKey(functionCallName)) {
+            return this.functions.get(functionCallName).invoke(actualParams, functions, procedures, scope, ctx);
+        }
+
+        //no such thing as this procedure.
+        else {
+            String msgErr = "Invalid evaluation. Function call \"" + ctx.identifier().getText()  + "\" does not exist / was never declared: ";
+            throw new PASCALetException(ctx, msgErr);
+        }
+
+        String errMsg = "Function designator failed to be invoked: ";
+        throw new PASCALetException(ctx, errMsg);
     }
 
     @Override

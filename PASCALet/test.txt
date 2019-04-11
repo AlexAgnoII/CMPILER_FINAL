@@ -1,17 +1,11 @@
 program alex;
-Var x , invoker: integer;
-
-procedure proc();
 Var x : integer;
+
+function tESt(): integer;
 begin
-   X:= 10;
-   writeln('In procedure: ', X);
-   x:= x * 6;
-   writeln('In procedure after operation: ', x)
 end;
 
 begin
-    X:= 5;
-    proc();
-    writeln('In main: ', x);
+    x:= TESt();
+
 end.
