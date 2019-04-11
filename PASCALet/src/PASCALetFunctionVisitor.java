@@ -50,7 +50,6 @@ public class PASCALetFunctionVisitor extends PASCALetGrammarBaseVisitor<PASCALet
        System.out.println("Return type: " + returnType);
        System.out.println("Function Parameter size: " + paramCount);*/
 
-       System.out.println(functionName);
        this.functions.put(functionName, new PASCALetFunction(funcParams, paramCount, block, returnType));
 
        return PASCALetObject.VOID;

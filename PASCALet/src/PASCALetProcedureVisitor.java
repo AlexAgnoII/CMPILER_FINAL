@@ -46,8 +46,6 @@ public class PASCALetProcedureVisitor extends PASCALetGrammarBaseVisitor<PASCALe
            System.out.println(" Type: " + procParams.get(i).typeIdentifier().getText());
        }*/
         //System.out.println("Procedure Parameter size: " + paramCount);
-
-        System.out.println(procedureName);
         procedures.put(procedureName, new PASCALetProcedure(procParams, paramCount, block));
 
         return PASCALetObject.VOID;

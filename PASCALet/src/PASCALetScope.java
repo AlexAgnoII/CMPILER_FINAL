@@ -8,6 +8,8 @@ public class PASCALetScope {
     private PASCALetScope parent;
     private Map<String, PASCALetObject> variables;
     private Map<String, PASCALetObject> constants;
+    private String functionName;
+    private boolean isFunctionScope;
 
     public PASCALetScope() {
         this(null);
@@ -17,6 +19,16 @@ public class PASCALetScope {
         this.parent = parent;
         this.variables = new HashMap<>();
         this.constants = new HashMap<>();
+        this.isFunctionScope = false;
+        this.functionName = "";
+    }
+
+    public PASCALetScope(PASCALetScope parent, String functionName) {
+        this.parent = parent;
+        this.variables = new HashMap<>();
+        this.constants = new HashMap<>();
+        this.functionName = functionName;
+        this.isFunctionScope = true;
     }
 
     //inserts a value to a variable.
@@ -181,6 +193,14 @@ public class PASCALetScope {
             sb.append(con.getKey()).append("->").append(con.getValue().getValue()).append("(" + con.getValue().getTypeAsString() +")").append(",");
         }
         return sb.toString();
+    }
+
+    public String getFunctionName() {
+        return this.functionName;
+    }
+
+    public boolean isAFunctionScope() {
+        return this.isFunctionScope;
     }
 
 }

@@ -23,10 +23,12 @@ public class PASCALetFunction {
                                  Map<String, PASCALetFunction> functions,
                                  Map<String, PASCALetProcedure> procedures,
                                  PASCALetScope globalScope,
+                                 String functionName,
                                  ParserRuleContext ctx) {
 
         //Procedure scope. Parent is global scope.
-        PASCALetScope funcScope = new PASCALetScope(globalScope);
+        functionName = functionName.toLowerCase();
+        PASCALetScope funcScope = new PASCALetScope(globalScope, functionName);
 
         if(actualParams != null) {
             if(this.parameterCount != actualParams.size()) {
@@ -48,8 +50,8 @@ public class PASCALetFunction {
 
                     //must be same type.
                     if(value.getTypeAsString().equalsIgnoreCase(this.params.get(x).typeIdentifier().getText())) {
-                        funcScope.addVariable(identifiers.get(actualParamindex).getText(), value.getTypeAsString(), ctx);
-                        funcScope.assignVariable(identifiers.get(actualParamindex).getText(), value, ctx);
+                        funcScope.addVariable(identifiers.get(y).getText(), value.getTypeAsString(), ctx);
+                        funcScope.assignVariable(identifiers.get(y).getText(), value, ctx);
 
                         actualParamindex++;
                     }
@@ -74,7 +76,14 @@ public class PASCALetFunction {
             retValue = pReturnValue.value;
         }
 
-        return retValue;
+        if(this.returnType.equalsIgnoreCase(retValue.getTypeAsString())) {
+            return retValue;
+        }
+        else {
+            String errMsg = "Invalid evaluation. Returned type does not match function's return type: ";
+            throw new PASCALetException(ctx, errMsg);
+        }
+
     }
 
 

@@ -7,14 +7,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> {
-    private BufferedReader bufferedReader;
+
     private PASCALetScope scope;
     private Map<String, PASCALetFunction> functions;
     private Map<String, PASCALetProcedure> procedures;
+    private static PASCALetReturnValue pReturnValue = new PASCALetReturnValue();
 
 
     public PASCALetVisitor (PASCALetScope scope, Map<String, PASCALetFunction> functions, Map<String, PASCALetProcedure> procedures) {
-        bufferedReader = new BufferedReader( (new InputStreamReader((System.in))));
         this.scope = scope;
         this.functions = functions;
         this.procedures = procedures;
@@ -195,9 +195,24 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
     private void performAssignment(PASCALetGrammarParser.AssignmentStatementContext ctx) {
 
         String identifierName = ctx.variable().getText();
-
         PASCALetObject pObject = this.visit(ctx.expression());
-        scope.assignVariable(identifierName, pObject, ctx);
+
+        if(scope.isAFunctionScope()){
+
+            if(scope.getFunctionName().equalsIgnoreCase(identifierName)) {
+                pReturnValue.value = pObject;
+                throw pReturnValue;
+            }
+            //normal assignment.
+            else {
+                scope.assignVariable(identifierName, pObject, ctx);
+            }
+
+        }
+
+        else {//if not a function scope, do a simple assignment variable.
+            scope.assignVariable(identifierName, pObject, ctx);
+        }
 
         //for testing only.
         //System.out.println(scope.VariablesToString());
@@ -413,6 +428,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override
     public PASCALetObject visitAssignmentStatement (PASCALetGrammarParser.AssignmentStatementContext ctx) {
+        System.out.println("Hello!");
         return super.visitAssignmentStatement(ctx);
     }
 
@@ -741,7 +757,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
         }
 
         else if (ctx.functionDesignator() != null){
-            this.visit(ctx.functionDesignator());
+            pObject = this.visit(ctx.functionDesignator());
         }
 
         //a constant value. //TODO still missing char constant.....
@@ -830,7 +846,7 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
         //perform procedure call.
         else if(functions.containsKey(functionCallName)) {
-            return this.functions.get(functionCallName).invoke(actualParams, functions, procedures, scope, ctx);
+            return this.functions.get(functionCallName).invoke(actualParams, functions, procedures, scope, functionIdentifier, ctx);
         }
 
         //no such thing as this procedure.

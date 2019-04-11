@@ -41,14 +41,13 @@ public class PASCALetProcedure {
             for(int x = 0; x < this.params.size(); x++) {
 
                 List<PASCALetGrammarParser.IdentifierContext> identifiers = this.params.get(x).identifierList().identifier();
+
                 for(int y = 0; y < identifiers.size(); y++) {
-
                     PASCALetObject value = pVisitor.visit(actualParams.get(actualParamindex));
-
                     //must be same type.
                     if(value.getTypeAsString().equalsIgnoreCase(this.params.get(x).typeIdentifier().getText())) {
-                        procScope.addVariable(identifiers.get(actualParamindex).getText(), value.getTypeAsString(), ctx);
-                        procScope.assignVariable(identifiers.get(actualParamindex).getText(), value, ctx);
+                        procScope.addVariable(identifiers.get(y).getText(), value.getTypeAsString(), ctx);
+                        procScope.assignVariable(identifiers.get(y).getText(), value, ctx);
 
                         actualParamindex++;
                     }

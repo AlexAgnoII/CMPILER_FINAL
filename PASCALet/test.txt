@@ -1,11 +1,21 @@
 program alex;
 Var x : integer;
 
-function tESt(): integer;
+function test(x : integer; y : integer; z : integer; w : integer) : integer;
 begin
+    for x:= 1 to 5 do
+        begin
+            writeln(x+y+z+w);
+            y:= y + 2;
+        end;
+    test:=-99;
 end;
 
+
 begin
-    x:= TESt();
+    x:=1;
+    writeln(x);
+    x:= test(2, 5, 4, 5);
+    writeln(x);
 
 end.
