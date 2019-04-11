@@ -29,6 +29,7 @@ public class PASCALetFunction {
         //Procedure scope. Parent is global scope.
         functionName = functionName.toLowerCase();
         PASCALetScope funcScope = new PASCALetScope(globalScope, functionName);
+        funcScope.setProgramName(globalScope.getProgramName());
 
         if(actualParams != null) {
             if(this.parameterCount != actualParams.size()) {

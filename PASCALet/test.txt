@@ -1,13 +1,15 @@
 program alex;
 
-var x : array[1..10] of integer;
-VAR a : char;
-var b : string;
-var c : boolean;
-var y : integer;
+var x : integer;
+
+procedure test();
+Var alex : integer ;
+begin
+
+end;
 
 begin
-   readln(y);
 
-   write(y);
+   test;
+
 end.

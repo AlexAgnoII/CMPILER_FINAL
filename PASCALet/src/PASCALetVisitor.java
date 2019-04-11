@@ -27,6 +27,10 @@ public class PASCALetVisitor extends PASCALetGrammarBaseVisitor<PASCALetObject> 
 
     @Override //
     public PASCALetObject visitProgramHeading (PASCALetGrammarParser.ProgramHeadingContext ctx) {
+        String programName = ctx.identifier().getText();
+        programName = programName.toLowerCase();
+        scope.setProgramName(programName);
+
         return super.visitProgramHeading(ctx);
     }
 

@@ -10,6 +10,7 @@ public class PASCALetScope {
     private Map<String, PASCALetObject> constants;
     private String functionName;
     private boolean isFunctionScope;
+    private String programName;
 
     public PASCALetScope() {
         this(null);
@@ -21,6 +22,7 @@ public class PASCALetScope {
         this.constants = new HashMap<>();
         this.isFunctionScope = false;
         this.functionName = "";
+        this.programName = "";
     }
 
     public PASCALetScope(PASCALetScope parent, String functionName) {
@@ -29,6 +31,7 @@ public class PASCALetScope {
         this.constants = new HashMap<>();
         this.functionName = functionName;
         this.isFunctionScope = true;
+        this.programName = "";
     }
 
     //inserts a value to a variable.
@@ -40,13 +43,17 @@ public class PASCALetScope {
     public void addVariable(String variableName, String type, ParserRuleContext ctx) {
         variableName = variableName.toLowerCase();
 
+        if(variableName.equalsIgnoreCase(this.programName)) {
+            String errorMsg = "Program name \"" + variableName + "\" cannot be used as a variable identifier: " ;
+            throw new PASCALetException(ctx, errorMsg);
+        }
 
         //Variable never used, therefore insert it in our variable name.
-        if(!variables.containsKey(variableName) && !constants.containsKey(variableName)) {
-             Object pascaletType = ConvertStringToObjectType.start(type);
-             PASCALetObject value = new PASCALetObject(pascaletType);
-             this.addVariableAndValue(variableName, value);
-        }
+        else if(!variables.containsKey(variableName) && !constants.containsKey(variableName)) {
+                Object pascaletType = ConvertStringToObjectType.start(type);
+                PASCALetObject value = new PASCALetObject(pascaletType);
+                this.addVariableAndValue(variableName, value);
+            }
 
         else { //exists already, throw an error!
              String errorMsg = "Identifier \"" + variableName + "\" already in use. Cannot be a variable identifier: " ;
@@ -58,8 +65,13 @@ public class PASCALetScope {
         variableName = variableName.toLowerCase();
 
 
+        if(variableName.equalsIgnoreCase(this.programName)) {
+            String errorMsg = "Program name \"" + variableName + "\" cannot be used as a variable identifier: " ;
+            throw new PASCALetException(ctx, errorMsg);
+        }
+
         //Variable never used, therefore insert it in our variable name.
-        if(!variables.containsKey(variableName) && !constants.containsKey(variableName)) {
+        else if(!variables.containsKey(variableName) && !constants.containsKey(variableName)) {
             Object pascaletType = ConvertStringToObjectType.start(type);
             int[] arr = new int[maxValue];
             PASCALetObject value = new PASCALetObject(pascaletType, arr);
@@ -76,8 +88,12 @@ public class PASCALetScope {
     public void addConstant(String constantName, PASCALetObject value, ParserRuleContext ctx) {
         constantName = constantName.toLowerCase();
 
+        if(constantName.equalsIgnoreCase(this.programName)) {
+            String errorMsg = "Program name \"" + constantName + "\" cannot be used as a constant identifier: " ;
+            throw new PASCALetException(ctx, errorMsg);
+        }
         //if constant doesnt exist, create new constant.
-        if (!constants.containsKey(constantName) && !variables.containsKey(constantName)) {
+        else if (!constants.containsKey(constantName) && !variables.containsKey(constantName)) {
             this.constants.put (constantName, value);
         }
 
@@ -86,7 +102,6 @@ public class PASCALetScope {
             String errorMsg = "Identifier \"" + constantName + "\"  already in use. Cannot be a constant identifier: ";
             throw new PASCALetException(ctx, errorMsg);
         }
-
     }
 
     //Assign a value to a variable.
@@ -211,6 +226,14 @@ public class PASCALetScope {
             sb.append(con.getKey()).append("->").append(con.getValue().getValue()).append("(" + con.getValue().getTypeAsString() +")").append(",");
         }
         return sb.toString();
+    }
+
+    public String getProgramName() {
+        return this.programName;
+    }
+
+    public void setProgramName(String programName) {
+        this.programName = programName;
     }
 
     public String getFunctionName() {
